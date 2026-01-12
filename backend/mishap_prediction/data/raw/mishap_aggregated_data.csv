@@ -1,0 +1,595 @@
+year,quarter,entity_type,entity_value,mishap_count
+2015,1,MishapType,Ground,4
+2023,3,MishapType,Aviation,135
+2018,3,MishapType,Aviation,1
+2024,2,MishapType,Ground,325
+2022,1,MishapType,Ground,465
+2021,4,MishapType,Ground,385
+2014,2,MishapType,Aviation,1
+1990,1,MishapType,Aviation,1
+2012,1,MishapType,Ground,4
+1971,4,MishapType,Ground,2
+1995,3,MishapType,Ground,1
+2019,1,MishapType,Ground,51
+2018,4,MishapType,Ground,4
+1983,1,MishapType,Ground,2
+2005,3,MishapType,Aviation,1
+1990,1,MishapType,Ground,1
+2020,2,MishapType,Aviation,627
+2017,4,MishapType,Aviation,1
+2024,2,MishapType,Aviation,37
+2014,2,MishapType,Ground,2
+2025,2,MishapType,Ground,170
+2011,4,MishapType,Ground,1
+2004,1,MishapType,Ground,1
+2017,2,MishapType,Ground,1
+1983,1,MishapType,Aviation,1
+2020,4,MishapType,Aviation,269
+2019,3,MishapType,Ground,12
+2025,4,MishapType,Ground,1
+2016,1,MishapType,Ground,2
+1947,1,MishapType,Ground,1
+2013,3,MishapType,Ground,1
+1998,3,MishapType,Aviation,1
+2022,1,MishapType,Aviation,95
+2021,4,MishapType,Aviation,70
+2024,4,MishapType,Ground,198
+2021,2,MishapType,Ground,450
+2000,2,MishapType,Ground,1
+1983,3,MishapType,Ground,1
+2021,1,MishapType,Ground,621
+1991,3,MishapType,Ground,1
+1900,1,MishapType,Ground,1
+2020,4,MishapType,Ground,889
+2012,1,MishapType,Aviation,1
+2018,1,MishapType,Ground,10
+1969,4,MishapType,Ground,1
+2022,3,MishapType,Ground,604
+1999,2,MishapType,Aviation,1
+2022,3,MishapType,Aviation,36
+2000,2,MishapType,Aviation,1
+1989,1,MishapType,Ground,1
+2000,3,MishapType,Ground,3
+2019,3,MishapType,Aviation,5
+2015,4,MishapType,Ground,1
+2025,1,MishapType,Aviation,75
+2018,3,MishapType,Ground,4
+1995,2,MishapType,Ground,2
+2025,1,MishapType,Ground,713
+2023,3,MishapType,Ground,266
+2021,1,MishapType,Aviation,221
+2010,4,MishapType,Aviation,1
+1979,3,MishapType,Ground,1
+2011,1,MishapType,Ground,1
+2010,4,MishapType,Ground,1
+2023,2,MishapType,Aviation,39
+2018,1,MishapType,Aviation,1
+2020,2,MishapType,Ground,1389
+1972,3,MishapType,Ground,1
+2024,4,MishapType,Aviation,98
+1988,2,MishapType,Aviation,1
+2025,3,MishapType,Ground,6
+2020,1,MishapType,Ground,2201
+2021,3,MishapType,Ground,510
+2018,2,MishapType,Aviation,1
+2017,1,MishapType,Ground,3
+1990,2,MishapType,Ground,1
+2021,3,MishapType,Aviation,132
+2024,3,MishapType,Ground,122
+2019,2,MishapType,Ground,7
+2012,2,MishapType,Ground,2
+2002,1,MishapType,Aviation,1
+2014,1,MishapType,Aviation,2
+1988,1,MishapType,Ground,1
+2024,1,MishapType,Aviation,94
+2020,3,MishapType,Aviation,366
+2014,1,MishapType,Ground,7
+2023,1,MishapType,Ground,277
+2022,2,MishapType,Aviation,61
+2025,3,MishapType,Aviation,4
+2003,2,MishapType,Aviation,1
+2019,1,MishapType,Aviation,1
+2019,4,MishapType,Ground,660
+2000,1,MishapType,Ground,4
+2002,1,MishapType,Ground,2
+2009,4,MishapType,Ground,1
+2015,2,MishapType,Ground,1
+2010,1,MishapType,Ground,3
+1985,3,MishapType,Aviation,1
+2010,1,MishapType,Aviation,1
+2000,4,MishapType,Aviation,2
+2013,4,MishapType,Ground,2
+2023,4,MishapType,Aviation,64
+2022,4,MishapType,Ground,163
+2010,3,MishapType,Ground,1
+2016,3,MishapType,Ground,2
+1986,2,MishapType,Ground,1
+1977,3,MishapType,Aviation,1
+2015,3,MishapType,Ground,2
+2020,3,MishapType,Ground,1045
+1995,1,MishapType,Ground,2
+2025,2,MishapType,Aviation,64
+1983,2,MishapType,Aviation,1
+2023,2,MishapType,Ground,219
+2016,2,MishapType,Aviation,2
+2009,3,MishapType,Aviation,1
+1985,2,MishapType,Aviation,1
+2018,2,MishapType,Ground,3
+2024,3,MishapType,Aviation,13
+1993,2,MishapType,Ground,1
+2023,4,MishapType,Ground,242
+2020,1,MishapType,Aviation,909
+2021,2,MishapType,Aviation,273
+1980,4,MishapType,Aviation,1
+1972,4,MishapType,Ground,2
+1980,4,MishapType,Ground,1
+2000,1,MishapType,Aviation,1
+2019,4,MishapType,Aviation,270
+2000,4,MishapType,Ground,1
+2014,3,MishapType,Ground,1
+1900,2,MishapType,Ground,1
+2022,4,MishapType,Aviation,35
+1960,3,MishapType,Ground,1
+2008,4,MishapType,Aviation,1
+2001,1,MishapType,Ground,2
+2004,2,MishapType,Ground,1
+2022,2,MishapType,Ground,421
+2024,1,MishapType,Ground,611
+2023,1,MishapType,Aviation,42
+2011,2,MishapType,Ground,1
+2017,2,Source,Mishap Report,1
+1900,2,Source,Mishap Report,1
+2005,3,Source,Mishap Report,1
+2022,4,Source,Initial Notification,31
+2020,3,Source,Initial Notification,279
+1972,4,Source,Mishap Report,2
+2021,2,Source,Mishap Report,491
+1971,4,Source,Initial Notification,1
+1991,3,Source,Mishap Report,1
+2013,3,Source,Mishap Report,1
+2011,2,Source,Mishap Report,1
+2025,2,Source,Initial Notification,121
+2020,3,Source,Mishap Report,1132
+2025,4,Source,Mishap Report,1
+2023,3,Source,Mishap Report,311
+2004,1,Source,Initial Notification,1
+2001,1,Source,Initial Notification,1
+2019,1,Source,Mishap Report,49
+2015,1,Source,Mishap Report,4
+2023,1,Source,Initial Notification,27
+2022,4,Source,Mishap Report,167
+2018,4,Source,Mishap Report,4
+1995,3,Source,Mishap Report,1
+2018,1,Source,Initial Notification,4
+2024,2,Source,Mishap Report,347
+1969,4,Source,Mishap Report,1
+2024,3,Source,Initial Notification,20
+2000,1,Source,Initial Notification,1
+2021,2,Source,Initial Notification,232
+2017,4,Source,Mishap Report,1
+2003,2,Source,Mishap Report,1
+2011,4,Source,Mishap Report,1
+2023,1,Source,Mishap Report,292
+2024,3,Source,Mishap Report,115
+2012,1,Source,Mishap Report,5
+1995,1,Source,Initial Notification,1
+1983,1,Source,Mishap Report,3
+1971,4,Source,Mishap Report,1
+2014,2,Source,Initial Notification,1
+2008,4,Source,Mishap Report,1
+1947,1,Source,Mishap Report,1
+1993,2,Source,Mishap Report,1
+2000,1,Source,Mishap Report,4
+2015,2,Source,Mishap Report,1
+2019,3,Source,Mishap Report,17
+2024,2,Source,Initial Notification,15
+2018,1,Source,Mishap Report,7
+2020,2,Source,Initial Notification,533
+1988,2,Source,Mishap Report,1
+2015,4,Source,Mishap Report,1
+2022,1,Source,Mishap Report,452
+2021,4,Source,Mishap Report,297
+2022,1,Source,Initial Notification,108
+1998,3,Source,Mishap Report,1
+2021,4,Source,Initial Notification,158
+2016,2,Source,Mishap Report,2
+2020,2,Source,Mishap Report,1450
+2000,3,Source,Mishap Report,3
+2019,1,Source,Initial Notification,3
+2025,2,Source,Mishap Report,113
+1900,1,Source,Mishap Report,1
+2001,1,Source,Mishap Report,1
+2023,3,Source,Initial Notification,90
+1985,2,Source,Mishap Report,1
+2009,3,Source,Mishap Report,1
+1972,3,Source,Mishap Report,1
+1990,1,Source,Mishap Report,2
+2014,2,Source,Mishap Report,2
+1977,3,Source,Mishap Report,1
+2013,4,Source,Mishap Report,1
+2023,4,Source,Mishap Report,233
+2025,3,Source,Mishap Report,10
+2021,1,Source,Mishap Report,549
+2011,1,Source,Mishap Report,1
+2010,4,Source,Mishap Report,2
+1960,3,Source,Mishap Report,1
+1995,2,Source,Mishap Report,1
+2017,1,Source,Initial Notification,1
+2009,4,Source,Mishap Report,1
+2022,3,Source,Initial Notification,95
+1979,3,Source,Mishap Report,1
+2000,4,Source,Mishap Report,2
+2024,1,Source,Mishap Report,567
+2018,3,Source,Mishap Report,3
+2023,2,Source,Initial Notification,58
+2020,4,Source,Mishap Report,893
+2025,1,Source,Initial Notification,247
+2021,1,Source,Initial Notification,293
+2019,2,Source,Mishap Report,6
+2024,4,Source,Initial Notification,69
+2019,4,Source,Initial Notification,126
+1983,3,Source,Mishap Report,1
+1999,2,Source,Initial Notification,1
+2020,4,Source,Initial Notification,265
+2022,3,Source,Mishap Report,545
+2002,1,Source,Initial Notification,3
+1989,1,Source,Mishap Report,1
+2000,2,Source,Mishap Report,2
+2010,1,Source,Mishap Report,4
+1983,2,Source,Mishap Report,1
+1995,2,Source,Initial Notification,1
+2018,3,Source,Initial Notification,2
+2022,2,Source,Mishap Report,411
+2020,2,Source,Near Miss,33
+2021,3,Source,Initial Notification,237
+2016,1,Source,Mishap Report,2
+2013,4,Source,Initial Notification,1
+2014,3,Source,Mishap Report,1
+2012,2,Source,Mishap Report,2
+2014,1,Source,Initial Notification,3
+1988,1,Source,Mishap Report,1
+2025,1,Source,Mishap Report,541
+2024,4,Source,Mishap Report,227
+2014,1,Source,Mishap Report,6
+1986,2,Source,Mishap Report,1
+2024,1,Source,Initial Notification,138
+2020,1,Source,Mishap Report,2495
+2019,4,Source,Mishap Report,804
+2015,3,Source,Mishap Report,2
+2023,4,Source,Initial Notification,73
+1990,2,Source,Mishap Report,1
+2018,2,Source,Mishap Report,4
+1985,3,Source,Mishap Report,1
+2023,2,Source,Mishap Report,200
+1980,4,Source,Mishap Report,2
+2010,3,Source,Mishap Report,1
+2020,1,Source,Initial Notification,615
+2000,4,Source,Initial Notification,1
+2019,2,Source,Initial Notification,1
+2021,3,Source,Mishap Report,405
+1995,1,Source,Mishap Report,1
+2022,2,Source,Initial Notification,71
+2017,1,Source,Mishap Report,2
+2004,2,Source,Mishap Report,1
+2016,3,Source,Mishap Report,2
+1972,4,MishapClassification,P,1
+1995,1,MishapClassification,D,1
+1991,3,MishapClassification,E,1
+2009,3,MishapClassification,E,1
+2018,2,MishapClassification,P,2
+2018,1,MishapClassification,Unknown,3
+2025,1,MishapClassification,B,24
+2024,4,MishapClassification,B,18
+2023,1,MishapClassification,X,2
+2024,1,MishapClassification,P,346
+2021,2,MishapClassification,F,4
+2020,3,MishapClassification,C,109
+2021,1,MishapClassification,A,91
+1972,4,MishapClassification,D,1
+2013,3,MishapClassification,D,1
+2023,3,MishapClassification,E,66
+2021,3,MishapClassification,B,61
+2022,3,MishapClassification,Unknown,15
+2022,3,MishapClassification,E,143
+2022,4,MishapClassification,P,29
+2024,2,MishapClassification,A,26
+2023,4,MishapClassification,P,136
+2023,3,MishapClassification,Unknown,52
+2000,3,MishapClassification,E,1
+2004,1,MishapClassification,E,1
+2020,3,MishapClassification,D,170
+1960,3,MishapClassification,P,1
+1980,4,MishapClassification,P,1
+2022,4,MishapClassification,D,33
+2010,3,MishapClassification,P,1
+2019,2,MishapClassification,B,1
+2018,1,MishapClassification,E,3
+2021,2,MishapClassification,C,43
+2020,3,MishapClassification,F,6
+2020,2,MishapClassification,R,14
+2024,1,MishapClassification,D,73
+2023,4,MishapClassification,D,18
+2020,4,MishapClassification,B,83
+2024,3,MishapClassification,P,58
+2024,2,MishapClassification,Unknown,9
+2021,2,MishapClassification,D,66
+2003,2,MishapClassification,E,1
+2021,3,MishapClassification,A,74
+2023,1,MishapClassification,C,37
+2021,3,MishapClassification,R,1
+2004,2,MishapClassification,D,1
+2021,2,MishapClassification,P,292
+2021,4,MishapClassification,C,21
+2000,1,MishapClassification,C,4
+2020,1,MishapClassification,C,235
+2019,4,MishapClassification,C,80
+2022,1,MishapClassification,C,45
+2014,1,MishapClassification,A,1
+2021,1,MishapClassification,Unknown,127
+2020,2,MishapClassification,A,223
+2024,4,MishapClassification,A,32
+2024,3,MishapClassification,D,11
+2025,1,MishapClassification,A,48
+2012,2,MishapClassification,P,1
+2018,3,MishapClassification,B,1
+2022,1,MishapClassification,F,1
+2020,1,MishapClassification,P,1841
+1986,2,MishapClassification,P,1
+2019,4,MishapClassification,P,509
+2018,1,MishapClassification,A,1
+2025,2,MishapClassification,X,1
+2012,2,MishapClassification,D,1
+2024,3,MishapClassification,C,7
+2023,1,MishapClassification,F,9
+1995,1,MishapClassification,C,1
+2019,4,MishapClassification,D,78
+2020,1,MishapClassification,D,207
+2022,2,MishapClassification,B,18
+1971,4,MishapClassification,Unknown,1
+2021,1,MishapClassification,E,66
+2023,2,MishapClassification,B,27
+1988,1,MishapClassification,P,1
+2018,2,MishapClassification,C,2
+2024,2,MishapClassification,E,90
+2023,3,MishapClassification,F,4
+2023,3,MishapClassification,X,4
+2021,1,MishapClassification,B,61
+2001,1,MishapClassification,C,1
+1971,4,MishapClassification,P,1
+2022,2,MishapClassification,D,56
+2020,4,MishapClassification,Unknown,115
+2012,1,MishapClassification,P,1
+2011,4,MishapClassification,P,1
+2023,4,MishapClassification,B,19
+2021,2,MishapClassification,E,129
+2024,1,MishapClassification,B,45
+2021,4,MishapClassification,R,1
+2015,2,MishapClassification,P,1
+2019,3,MishapClassification,C,2
+2025,2,MishapClassification,D,19
+2015,1,MishapClassification,E,1
+1999,2,MishapClassification,Unknown,1
+2022,3,MishapClassification,B,41
+2014,3,MishapClassification,D,1
+2016,2,MishapClassification,P,1
+2022,1,MishapClassification,A,27
+2021,4,MishapClassification,A,59
+1990,1,MishapClassification,E,2
+1995,2,MishapClassification,E,1
+1977,3,MishapClassification,P,1
+2023,2,MishapClassification,A,39
+1995,2,MishapClassification,Unknown,1
+2018,3,MishapClassification,E,1
+2018,3,MishapClassification,Unknown,1
+2023,1,MishapClassification,P,60
+2019,3,MishapClassification,D,3
+2025,2,MishapClassification,C,11
+2012,1,MishapClassification,D,3
+2021,3,MishapClassification,P,261
+2021,2,MishapClassification,Unknown,42
+2020,4,MishapClassification,E,115
+2022,2,MishapClassification,C,31
+2000,3,MishapClassification,C,1
+2023,1,MishapClassification,D,69
+2020,1,MishapClassification,B,203
+2019,4,MishapClassification,B,58
+2022,3,MishapClassification,A,40
+2017,1,MishapClassification,E,2
+2015,4,MishapClassification,P,1
+1900,2,MishapClassification,P,1
+2017,2,MishapClassification,D,1
+2019,1,MishapClassification,C,1
+2021,4,MishapClassification,Unknown,54
+1998,3,MishapClassification,E,1
+2021,2,MishapClassification,X,11
+2016,1,MishapClassification,E,1
+2020,2,MishapClassification,E,87
+2022,2,MishapClassification,P,194
+2022,1,MishapClassification,Unknown,19
+2022,4,MishapClassification,C,23
+2019,2,MishapClassification,A,1
+2020,4,MishapClassification,R,7
+2023,4,MishapClassification,A,34
+2024,1,MishapClassification,A,61
+2023,3,MishapClassification,D,36
+2022,3,MishapClassification,R,30
+2011,2,MishapClassification,P,1
+1983,3,MishapClassification,E,1
+2022,4,MishapClassification,F,2
+1985,2,MishapClassification,P,1
+2020,4,MishapClassification,A,85
+2024,3,MishapClassification,B,4
+2019,1,MishapClassification,P,31
+2018,4,MishapClassification,P,2
+2023,3,MishapClassification,C,22
+2025,2,MishapClassification,P,63
+2024,4,MishapClassification,Unknown,21
+2025,1,MishapClassification,Unknown,157
+2018,4,MishapClassification,D,2
+2019,1,MishapClassification,D,4
+2000,2,MishapClassification,E,1
+2020,3,MishapClassification,P,636
+2020,2,MishapClassification,Unknown,197
+2025,1,MishapClassification,E,122
+2024,4,MishapClassification,E,43
+2021,4,MishapClassification,E,63
+2000,4,MishapClassification,A,1
+2022,1,MishapClassification,E,98
+2023,3,MishapClassification,P,149
+2019,1,MishapClassification,B,11
+2021,4,MishapClassification,B,30
+1980,4,MishapClassification,E,1
+2023,2,MishapClassification,E,32
+2020,2,MishapClassification,D,200
+2023,4,MishapClassification,R,4
+2022,1,MishapClassification,B,8
+2024,1,MishapClassification,R,5
+2020,2,MishapClassification,P,941
+2010,4,MishapClassification,P,2
+2024,2,MishapClassification,D,44
+2022,2,MishapClassification,E,143
+2011,1,MishapClassification,P,1
+2021,1,MishapClassification,C,44
+2023,1,MishapClassification,B,15
+2022,4,MishapClassification,R,1
+2020,1,MishapClassification,Unknown,143
+2019,4,MishapClassification,Unknown,85
+1993,2,MishapClassification,B,1
+2000,4,MishapClassification,E,1
+2017,4,MishapClassification,P,1
+2025,3,MishapClassification,E,1
+2002,1,MishapClassification,Unknown,2
+1972,3,MishapClassification,P,1
+2025,4,MishapClassification,D,1
+1983,1,MishapClassification,P,3
+2020,4,MishapClassification,F,4
+2021,1,MishapClassification,P,349
+2009,4,MishapClassification,E,1
+2018,3,MishapClassification,D,1
+2002,1,MishapClassification,E,1
+2024,2,MishapClassification,C,15
+2021,2,MishapClassification,A,81
+1900,1,MishapClassification,P,1
+2021,1,MishapClassification,D,102
+2022,2,MishapClassification,Unknown,11
+2020,3,MishapClassification,A,148
+2020,1,MishapClassification,E,95
+2019,4,MishapClassification,E,11
+2023,2,MishapClassification,Unknown,14
+2021,3,MishapClassification,F,3
+2025,1,MishapClassification,C,14
+2024,4,MishapClassification,C,45
+2018,1,MishapClassification,C,1
+2022,4,MishapClassification,Unknown,6
+2014,1,MishapClassification,P,4
+2023,1,MishapClassification,A,38
+2020,1,MishapClassification,R,27
+2023,4,MishapClassification,Unknown,27
+1969,4,MishapClassification,P,1
+2020,2,MishapClassification,F,7
+2021,3,MishapClassification,C,49
+1947,1,MishapClassification,P,1
+2020,3,MishapClassification,B,130
+1988,2,MishapClassification,P,1
+2023,3,MishapClassification,B,30
+2018,1,MishapClassification,P,2
+2020,1,MishapClassification,A,331
+2019,4,MishapClassification,A,105
+2021,3,MishapClassification,D,66
+2024,1,MishapClassification,Unknown,76
+2024,2,MishapClassification,P,168
+2010,1,MishapClassification,E,3
+2019,3,MishapClassification,P,7
+2019,2,MishapClassification,Unknown,1
+2022,2,MishapClassification,X,4
+2023,4,MishapClassification,E,52
+2024,1,MishapClassification,E,53
+2014,1,MishapClassification,D,1
+2005,3,MishapClassification,A,1
+2015,1,MishapClassification,P,3
+2025,2,MishapClassification,B,20
+2020,2,MishapClassification,C,160
+2022,4,MishapClassification,E,59
+2024,3,MishapClassification,A,7
+2018,1,MishapClassification,B,1
+2012,1,MishapClassification,A,1
+2022,4,MishapClassification,B,23
+2023,2,MishapClassification,D,71
+2000,3,MishapClassification,A,1
+1995,3,MishapClassification,E,1
+2019,1,MishapClassification,Unknown,2
+2019,2,MishapClassification,P,3
+2015,3,MishapClassification,D,1
+2025,1,MishapClassification,P,390
+2024,4,MishapClassification,P,101
+2024,3,MishapClassification,Unknown,9
+2024,1,MishapClassification,X,8
+2000,1,MishapClassification,E,1
+2014,2,MishapClassification,P,3
+2023,2,MishapClassification,F,1
+2014,1,MishapClassification,Unknown,3
+2013,4,MishapClassification,Unknown,1
+1983,2,MishapClassification,E,1
+2024,3,MishapClassification,E,39
+2020,1,MishapClassification,X,18
+2022,1,MishapClassification,P,280
+2025,1,MishapClassification,D,33
+2021,4,MishapClassification,P,191
+2021,3,MishapClassification,Unknown,74
+2008,4,MishapClassification,E,1
+2020,1,MishapClassification,F,10
+2019,4,MishapClassification,F,4
+2025,2,MishapClassification,A,33
+2021,3,MishapClassification,E,53
+2022,2,MishapClassification,A,16
+2013,4,MishapClassification,E,1
+2016,1,MishapClassification,P,1
+2017,1,MishapClassification,D,1
+2010,1,MishapClassification,D,1
+2023,2,MishapClassification,C,15
+2022,1,MishapClassification,D,82
+2020,2,MishapClassification,B,187
+2021,4,MishapClassification,D,36
+2019,1,MishapClassification,E,1
+2019,3,MishapClassification,A,3
+2015,3,MishapClassification,C,1
+2000,2,MishapClassification,D,1
+2024,4,MishapClassification,D,36
+2025,2,MishapClassification,E,39
+2025,3,MishapClassification,P,5
+2025,2,MishapClassification,Unknown,48
+2023,4,MishapClassification,C,16
+2024,1,MishapClassification,C,38
+2020,3,MishapClassification,R,30
+2020,4,MishapClassification,C,52
+1985,3,MishapClassification,P,1
+2000,4,MishapClassification,C,1
+2025,3,MishapClassification,D,3
+2022,3,MishapClassification,C,89
+2023,3,MishapClassification,R,3
+1989,1,MishapClassification,C,1
+2001,1,MishapClassification,E,1
+2023,2,MishapClassification,P,59
+2023,1,MishapClassification,Unknown,6
+2022,4,MishapClassification,A,22
+1979,3,MishapClassification,P,1
+2019,3,MishapClassification,B,2
+2021,1,MishapClassification,F,2
+2020,4,MishapClassification,P,577
+2022,2,MishapClassification,R,9
+2020,3,MishapClassification,Unknown,74
+2019,1,MishapClassification,A,2
+2016,3,MishapClassification,P,2
+2020,3,MishapClassification,E,108
+2016,2,MishapClassification,E,1
+2022,3,MishapClassification,D,115
+2025,3,MishapClassification,C,1
+2018,3,MishapClassification,P,1
+2020,4,MishapClassification,D,120
+2021,2,MishapClassification,B,55
+2023,1,MishapClassification,E,83
+1990,2,MishapClassification,E,1
+2022,3,MishapClassification,P,167
+2024,2,MishapClassification,B,10
+2019,2,MishapClassification,C,1
+2023,3,MishapClassification,A,35
