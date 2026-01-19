@@ -1,0 +1,19 @@
+:host {
+     display: block;
+     width: 100%;
+}
+
+.chart-canvas {
+     width: 100% !important;
+     height: 100% !important;
+     /* fill the chart-panel height */
+     min-height: 520px !important;
+     /* ensure reasonable canvas height */
+     display: block;
+}
+
+@media (max-width: 600px) {
+     .chart-canvas {
+          height: 260px !important;
+     }
+}

@@ -1,0 +1,33 @@
+<table class="ml-table">
+  <thead>
+    <tr>
+      <th *ngFor="let col of columns">{{ formatHeader(col) }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of data; let i = index" [class.striped]="i % 2 === 1">
+      <td *ngFor="let col of columns">{{ row[col] ?? '-' }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<section class="importance-section" *ngIf="featureImportance.length">
+     <br/> <br/>
+  <h3>Why did the model predict this? (Feature Importance)</h3>
+
+  <table class="importance-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Impact (%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let f of featureImportance | slice:0:5">
+        <td>{{ f.feature }}</td>
+        <td>{{ (f.importance * 100) | number:'1.1-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+

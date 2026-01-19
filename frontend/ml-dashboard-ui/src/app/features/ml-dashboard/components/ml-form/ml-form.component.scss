@@ -1,0 +1,33 @@
+.ml-form {
+     display: flex;
+     flex-direction: column;
+     gap: 16px;
+     max-width: 680px;
+     margin: 12px auto;
+}
+
+.form-row {
+     display: flex;
+     gap: 16px;
+     align-items: center;
+     flex-wrap: wrap;
+}
+
+.full-width {
+     flex: 1 1 320px;
+}
+
+.quarter-field {
+     width: 180px;
+}
+
+.actions {
+     display: flex;
+     align-items: center;
+     justify-content: flex-end;
+     flex: 1 1 auto;
+}
+
+button[mat-raised-button] {
+     min-width: 120px;
+}

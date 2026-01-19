@@ -1,0 +1,60 @@
+.ml-table {
+     width: 100%;
+     border-collapse: collapse;
+     font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+     table-layout: auto;
+     /* allow columns to size to content so headers can show */
+}
+
+.ml-table thead th {
+     text-align: left;
+     background: #f7f7f7;
+     padding: 10px 12px;
+     border-bottom: 1px solid #e6e6e6;
+     font-weight: 600;
+     color: #2b2b2b;
+     white-space: normal;
+     /* allow wrapping so headers don't force overflow */
+     word-break: break-word;
+}
+
+.ml-table tbody td {
+     padding: 8px 10px;
+     border-bottom: 1px solid #f1f1f1;
+     color: #333;
+     white-space: normal;
+     word-break: break-word;
+}
+
+/* allow the table panel to scroll horizontally if necessary rather than causing layout break */
+.table-panel {
+     overflow-x: auto;
+}
+
+/* ensure table stays flush left inside the panel */
+.table-panel .ml-table {
+     margin-left: 0;
+}
+
+.ml-table tbody tr.striped td {
+     background: #fafafa;
+}
+
+.ml-table tbody tr:hover td {
+     background: #fff;
+}
+
+.importance-section {
+     margin-top: 24px;
+}
+
+.importance-table {
+     width: 100%;
+     border-collapse: collapse;
+}
+
+.importance-table th,
+.importance-table td {
+     padding: 8px 12px;
+     border-bottom: 1px solid #e0e0e0;
+}

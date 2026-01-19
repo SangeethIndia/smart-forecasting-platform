@@ -1,0 +1,97 @@
+.dashboard-container {
+     max-width: 1200px;
+     margin: 28px auto;
+     padding: 20px;
+     background: #fff;
+     border: 1px solid rgba(0, 0, 0, 0.06);
+     border-radius: 10px;
+     box-shadow: 0 6px 18px rgba(31, 45, 61, 0.06);
+}
+
+.filters {
+     display: flex;
+     gap: 16px;
+     align-items: flex-end;
+     flex-wrap: wrap;
+}
+
+.results {
+     margin-top: 12px;
+     display: flex;
+     flex-direction: column;
+     /* stack vertically to avoid overflow */
+     gap: 12px;
+     align-items: stretch;
+}
+
+.chart-panel {
+     width: 100%;
+     min-height: 560px;
+     /* increased so chart is taller */
+     background: linear-gradient(180deg, #ffffff, #fbfbfd);
+     border-radius: 8px;
+     padding: 12px;
+     box-shadow: 0 4px 12px rgba(14, 30, 37, 0.04);
+     display: block;
+     border: 1px solid rgba(16, 24, 40, 0.04);
+     /* subtle border around chart */
+}
+
+
+.table-panel {
+     width: 100%;
+     background: #fff;
+     border-radius: 8px;
+     padding: 12px;
+     box-shadow: 0 4px 12px rgba(14, 30, 37, 0.04);
+     display: block;
+     overflow: visible;
+     /* allow table to size normally inside panel */
+}
+
+.dashboard-title {
+     color: #d32f2f;
+     text-align: center;
+     margin: 0 0 16px 0;
+     font-size: 1.6rem;
+     letter-spacing: 0.6px;
+}
+
+.view-toggle {
+     display: flex;
+     gap: 10px;
+     justify-content: center;
+     align-items: center;
+     margin-top: 8px;
+}
+
+.toggle-pill {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     padding: 8px 14px;
+     border-radius: 999px;
+     border: 1px solid rgba(60, 64, 67, 0.12);
+     background: #fff;
+     cursor: pointer;
+     font-weight: 600;
+     color: #344054;
+     box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.toggle-pill.active {
+     background: linear-gradient(180deg, #eef2ff, #e6f0ff);
+     border-color: #c7d2fe;
+     color: #1e40af;
+}
+
+@media (max-width: 900px) {
+     .results {
+          flex-direction: column;
+     }
+
+     .chart-panel,
+     .table-panel {
+          min-width: 0;
+     }
+}

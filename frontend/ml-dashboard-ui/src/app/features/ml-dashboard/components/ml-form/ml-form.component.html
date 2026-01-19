@@ -1,0 +1,31 @@
+<form (ngSubmit)="submit()" class="ml-form">
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Entity Type</mat-label>
+      <mat-select [(ngModel)]="entityType" name="entityType" required (selectionChange)="onEntityTypeChange()">
+        <mat-option value="MishapType">MishapType</mat-option>
+        <mat-option value="MishapClassification">MishapClassification</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Entity Value</mat-label>
+      <mat-select [(ngModel)]="entityValue" name="entityValue" required>
+        <mat-option *ngFor="let v of entityValues" [value]="v">{{ v }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="quarter-field">
+      <mat-label>No. of Quarters</mat-label>
+      <mat-select [(ngModel)]="nQuarters" name="nQuarters">
+        <mat-option *ngFor="let q of quarters" [value]="q">{{ q }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">Predict</button>
+    </div>
+  </div>
+</form>

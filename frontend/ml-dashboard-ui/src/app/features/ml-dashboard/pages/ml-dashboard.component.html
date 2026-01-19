@@ -1,0 +1,29 @@
+<div class="dashboard-container">
+  <h1 class="dashboard-title">MISHAP PREDICTIONS</h1>
+  <br/>
+  <app-ml-form (submitForm)="onSubmit($event)"></app-ml-form>
+
+  <!-- view toggle placed below the Predict button inside the form -->
+  <div class="view-toggle" style="margin-top:12px;">
+    <label class="toggle-pill" [class.active]="viewMode === 'chart'">
+      <input type="radio" name="viewMode" [(ngModel)]="viewMode" value="chart" hidden />
+      Chart View
+    </label>
+     <label class="toggle-pill" [class.active]="viewMode === 'table'">
+      <input type="radio" name="viewMode" [(ngModel)]="viewMode" value="table" hidden />
+      Table View
+    </label>
+  </div>
+
+  <ng-container *ngIf="facade.result$ | async as result">
+    <div class="results">
+        <div *ngIf="viewMode === 'chart'" class="chart-panel">
+          <app-ml-chart [data]="result.predictions"></app-ml-chart>
+        </div>
+
+        <div *ngIf="viewMode === 'table'" class="table-panel">
+          <app-ml-table [data]="result.predictions" [featureImportance]="result.feature_importance"></app-ml-table>
+        </div>
+    </div>
+  </ng-container>
+</div>
