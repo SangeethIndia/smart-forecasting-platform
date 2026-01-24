@@ -1,7 +1,382 @@
 year,quarter,entity_type,entity_value,mishap_count,prev_qtr_count,qoq_change,rolling_4q_avg
-1900,1,MishapType,Ground,1,0.0,1.0,0.0
-1900,2,MishapType,Ground,1,1.0,0.0,0.0
-1947,1,MishapType,Ground,1,1.0,0.0,0.0
+2000,3,MishapClassification,A,1,0.0,1.0,1.0
+2000,4,MishapClassification,A,1,1.0,0.0,1.0
+2005,3,MishapClassification,A,1,1.0,0.0,1.0
+2012,1,MishapClassification,A,1,1.0,0.0,1.0
+2014,1,MishapClassification,A,1,1.0,0.0,1.0
+2018,1,MishapClassification,A,1,1.0,0.0,1.0
+2019,1,MishapClassification,A,2,1.0,1.0,1.25
+2019,2,MishapClassification,A,1,2.0,-1.0,1.25
+2019,3,MishapClassification,A,3,1.0,2.0,1.75
+2019,4,MishapClassification,A,105,3.0,102.0,27.75
+2020,1,MishapClassification,A,331,105.0,226.0,110.0
+2020,2,MishapClassification,A,223,331.0,-108.0,165.5
+2020,3,MishapClassification,A,148,223.0,-75.0,201.75
+2020,4,MishapClassification,A,85,148.0,-63.0,196.75
+2021,1,MishapClassification,A,91,85.0,6.0,136.75
+2021,2,MishapClassification,A,81,91.0,-10.0,101.25
+2021,3,MishapClassification,A,74,81.0,-7.0,82.75
+2021,4,MishapClassification,A,59,74.0,-15.0,76.25
+2022,1,MishapClassification,A,27,59.0,-32.0,60.25
+2022,2,MishapClassification,A,16,27.0,-11.0,44.0
+2022,3,MishapClassification,A,40,16.0,24.0,35.5
+2022,4,MishapClassification,A,22,40.0,-18.0,26.25
+2023,1,MishapClassification,A,38,22.0,16.0,29.0
+2023,2,MishapClassification,A,39,38.0,1.0,34.75
+2023,3,MishapClassification,A,35,39.0,-4.0,33.5
+2023,4,MishapClassification,A,34,35.0,-1.0,36.5
+2024,1,MishapClassification,A,61,34.0,27.0,42.25
+2024,2,MishapClassification,A,26,61.0,-35.0,39.0
+2024,3,MishapClassification,A,7,26.0,-19.0,32.0
+2024,4,MishapClassification,A,32,7.0,25.0,31.5
+2025,1,MishapClassification,A,48,32.0,16.0,28.25
+2025,2,MishapClassification,A,33,48.0,-15.0,30.0
+1993,2,MishapClassification,B,1,0.0,1.0,1.0
+2018,1,MishapClassification,B,1,1.0,0.0,1.0
+2018,3,MishapClassification,B,1,1.0,0.0,1.0
+2019,1,MishapClassification,B,11,1.0,10.0,3.5
+2019,2,MishapClassification,B,1,11.0,-10.0,3.5
+2019,3,MishapClassification,B,2,1.0,1.0,3.75
+2019,4,MishapClassification,B,58,2.0,56.0,18.0
+2020,1,MishapClassification,B,203,58.0,145.0,66.0
+2020,2,MishapClassification,B,187,203.0,-16.0,112.5
+2020,3,MishapClassification,B,130,187.0,-57.0,144.5
+2020,4,MishapClassification,B,83,130.0,-47.0,150.75
+2021,1,MishapClassification,B,61,83.0,-22.0,115.25
+2021,2,MishapClassification,B,55,61.0,-6.0,82.25
+2021,3,MishapClassification,B,61,55.0,6.0,65.0
+2021,4,MishapClassification,B,30,61.0,-31.0,51.75
+2022,1,MishapClassification,B,8,30.0,-22.0,38.5
+2022,2,MishapClassification,B,18,8.0,10.0,29.25
+2022,3,MishapClassification,B,41,18.0,23.0,24.25
+2022,4,MishapClassification,B,23,41.0,-18.0,22.5
+2023,1,MishapClassification,B,15,23.0,-8.0,24.25
+2023,2,MishapClassification,B,27,15.0,12.0,26.5
+2023,3,MishapClassification,B,30,27.0,3.0,23.75
+2023,4,MishapClassification,B,19,30.0,-11.0,22.75
+2024,1,MishapClassification,B,45,19.0,26.0,30.25
+2024,2,MishapClassification,B,10,45.0,-35.0,26.0
+2024,3,MishapClassification,B,4,10.0,-6.0,19.5
+2024,4,MishapClassification,B,18,4.0,14.0,19.25
+2025,1,MishapClassification,B,24,18.0,6.0,14.0
+2025,2,MishapClassification,B,20,24.0,-4.0,16.5
+1989,1,MishapClassification,C,1,0.0,1.0,1.0
+1995,1,MishapClassification,C,1,1.0,0.0,1.0
+2000,1,MishapClassification,C,4,1.0,3.0,2.0
+2000,3,MishapClassification,C,1,4.0,-3.0,1.75
+2000,4,MishapClassification,C,1,1.0,0.0,1.75
+2001,1,MishapClassification,C,1,1.0,0.0,1.75
+2015,3,MishapClassification,C,1,1.0,0.0,1.0
+2018,1,MishapClassification,C,1,1.0,0.0,1.0
+2018,2,MishapClassification,C,2,1.0,1.0,1.25
+2019,1,MishapClassification,C,1,2.0,-1.0,1.25
+2019,2,MishapClassification,C,1,1.0,0.0,1.25
+2019,3,MishapClassification,C,2,1.0,1.0,1.5
+2019,4,MishapClassification,C,80,2.0,78.0,21.0
+2020,1,MishapClassification,C,235,80.0,155.0,79.5
+2020,2,MishapClassification,C,160,235.0,-75.0,119.25
+2020,3,MishapClassification,C,109,160.0,-51.0,146.0
+2020,4,MishapClassification,C,52,109.0,-57.0,139.0
+2021,1,MishapClassification,C,44,52.0,-8.0,91.25
+2021,2,MishapClassification,C,43,44.0,-1.0,62.0
+2021,3,MishapClassification,C,49,43.0,6.0,47.0
+2021,4,MishapClassification,C,21,49.0,-28.0,39.25
+2022,1,MishapClassification,C,45,21.0,24.0,39.5
+2022,2,MishapClassification,C,31,45.0,-14.0,36.5
+2022,3,MishapClassification,C,89,31.0,58.0,46.5
+2022,4,MishapClassification,C,23,89.0,-66.0,47.0
+2023,1,MishapClassification,C,37,23.0,14.0,45.0
+2023,2,MishapClassification,C,15,37.0,-22.0,41.0
+2023,3,MishapClassification,C,22,15.0,7.0,24.25
+2023,4,MishapClassification,C,16,22.0,-6.0,22.5
+2024,1,MishapClassification,C,38,16.0,22.0,22.75
+2024,2,MishapClassification,C,15,38.0,-23.0,22.75
+2024,3,MishapClassification,C,7,15.0,-8.0,19.0
+2024,4,MishapClassification,C,45,7.0,38.0,26.25
+2025,1,MishapClassification,C,14,45.0,-31.0,20.25
+2025,2,MishapClassification,C,11,14.0,-3.0,19.25
+2025,3,MishapClassification,C,1,11.0,-10.0,17.75
+1972,4,MishapClassification,D,1,0.0,1.0,1.0
+1995,1,MishapClassification,D,1,1.0,0.0,1.0
+2000,2,MishapClassification,D,1,1.0,0.0,1.0
+2004,2,MishapClassification,D,1,1.0,0.0,1.0
+2010,1,MishapClassification,D,1,1.0,0.0,1.0
+2012,1,MishapClassification,D,3,1.0,2.0,1.5
+2012,2,MishapClassification,D,1,3.0,-2.0,1.5
+2013,3,MishapClassification,D,1,1.0,0.0,1.5
+2014,1,MishapClassification,D,1,1.0,0.0,1.5
+2014,3,MishapClassification,D,1,1.0,0.0,1.0
+2015,3,MishapClassification,D,1,1.0,0.0,1.0
+2017,1,MishapClassification,D,1,1.0,0.0,1.0
+2017,2,MishapClassification,D,1,1.0,0.0,1.0
+2018,3,MishapClassification,D,1,1.0,0.0,1.0
+2018,4,MishapClassification,D,2,1.0,1.0,1.25
+2019,1,MishapClassification,D,4,2.0,2.0,2.0
+2019,3,MishapClassification,D,3,4.0,-1.0,2.5
+2019,4,MishapClassification,D,78,3.0,75.0,21.75
+2020,1,MishapClassification,D,207,78.0,129.0,73.0
+2020,2,MishapClassification,D,200,207.0,-7.0,122.0
+2020,3,MishapClassification,D,170,200.0,-30.0,163.75
+2020,4,MishapClassification,D,120,170.0,-50.0,174.25
+2021,1,MishapClassification,D,102,120.0,-18.0,148.0
+2021,2,MishapClassification,D,66,102.0,-36.0,114.5
+2021,3,MishapClassification,D,66,66.0,0.0,88.5
+2021,4,MishapClassification,D,36,66.0,-30.0,67.5
+2022,1,MishapClassification,D,82,36.0,46.0,62.5
+2022,2,MishapClassification,D,56,82.0,-26.0,60.0
+2022,3,MishapClassification,D,115,56.0,59.0,72.25
+2022,4,MishapClassification,D,33,115.0,-82.0,71.5
+2023,1,MishapClassification,D,69,33.0,36.0,68.25
+2023,2,MishapClassification,D,71,69.0,2.0,72.0
+2023,3,MishapClassification,D,36,71.0,-35.0,52.25
+2023,4,MishapClassification,D,18,36.0,-18.0,48.5
+2024,1,MishapClassification,D,73,18.0,55.0,49.5
+2024,2,MishapClassification,D,44,73.0,-29.0,42.75
+2024,3,MishapClassification,D,11,44.0,-33.0,36.5
+2024,4,MishapClassification,D,36,11.0,25.0,41.0
+2025,1,MishapClassification,D,33,36.0,-3.0,31.0
+2025,2,MishapClassification,D,19,33.0,-14.0,24.75
+2025,3,MishapClassification,D,3,19.0,-16.0,22.75
+2025,4,MishapClassification,D,1,3.0,-2.0,14.0
+1980,4,MishapClassification,E,1,0.0,1.0,1.0
+1983,2,MishapClassification,E,1,1.0,0.0,1.0
+1983,3,MishapClassification,E,1,1.0,0.0,1.0
+1990,1,MishapClassification,E,2,1.0,1.0,1.25
+1990,2,MishapClassification,E,1,2.0,-1.0,1.25
+1991,3,MishapClassification,E,1,1.0,0.0,1.25
+1995,2,MishapClassification,E,1,1.0,0.0,1.25
+1995,3,MishapClassification,E,1,1.0,0.0,1.0
+1998,3,MishapClassification,E,1,1.0,0.0,1.0
+2000,1,MishapClassification,E,1,1.0,0.0,1.0
+2000,2,MishapClassification,E,1,1.0,0.0,1.0
+2000,3,MishapClassification,E,1,1.0,0.0,1.0
+2000,4,MishapClassification,E,1,1.0,0.0,1.0
+2001,1,MishapClassification,E,1,1.0,0.0,1.0
+2002,1,MishapClassification,E,1,1.0,0.0,1.0
+2003,2,MishapClassification,E,1,1.0,0.0,1.0
+2004,1,MishapClassification,E,1,1.0,0.0,1.0
+2008,4,MishapClassification,E,1,1.0,0.0,1.0
+2009,3,MishapClassification,E,1,1.0,0.0,1.0
+2009,4,MishapClassification,E,1,1.0,0.0,1.0
+2010,1,MishapClassification,E,3,1.0,2.0,1.5
+2013,4,MishapClassification,E,1,3.0,-2.0,1.5
+2015,1,MishapClassification,E,1,1.0,0.0,1.5
+2016,1,MishapClassification,E,1,1.0,0.0,1.5
+2016,2,MishapClassification,E,1,1.0,0.0,1.0
+2017,1,MishapClassification,E,2,1.0,1.0,1.25
+2018,1,MishapClassification,E,3,2.0,1.0,1.75
+2018,3,MishapClassification,E,1,3.0,-2.0,1.75
+2019,1,MishapClassification,E,1,1.0,0.0,1.75
+2019,4,MishapClassification,E,11,1.0,10.0,4.0
+2020,1,MishapClassification,E,95,11.0,84.0,27.0
+2020,2,MishapClassification,E,87,95.0,-8.0,48.5
+2020,3,MishapClassification,E,108,87.0,21.0,75.25
+2020,4,MishapClassification,E,115,108.0,7.0,101.25
+2021,1,MishapClassification,E,66,115.0,-49.0,94.0
+2021,2,MishapClassification,E,129,66.0,63.0,104.5
+2021,3,MishapClassification,E,53,129.0,-76.0,90.75
+2021,4,MishapClassification,E,63,53.0,10.0,77.75
+2022,1,MishapClassification,E,98,63.0,35.0,85.75
+2022,2,MishapClassification,E,143,98.0,45.0,89.25
+2022,3,MishapClassification,E,143,143.0,0.0,111.75
+2022,4,MishapClassification,E,59,143.0,-84.0,110.75
+2023,1,MishapClassification,E,83,59.0,24.0,107.0
+2023,2,MishapClassification,E,32,83.0,-51.0,79.25
+2023,3,MishapClassification,E,66,32.0,34.0,60.0
+2023,4,MishapClassification,E,52,66.0,-14.0,58.25
+2024,1,MishapClassification,E,53,52.0,1.0,50.75
+2024,2,MishapClassification,E,90,53.0,37.0,65.25
+2024,3,MishapClassification,E,39,90.0,-51.0,58.5
+2024,4,MishapClassification,E,43,39.0,4.0,56.25
+2025,1,MishapClassification,E,122,43.0,79.0,73.5
+2025,2,MishapClassification,E,39,122.0,-83.0,60.75
+2025,3,MishapClassification,E,1,39.0,-38.0,51.25
+2019,4,MishapClassification,F,4,0.0,4.0,4.0
+2020,1,MishapClassification,F,10,4.0,6.0,7.0
+2020,2,MishapClassification,F,7,10.0,-3.0,7.0
+2020,3,MishapClassification,F,6,7.0,-1.0,6.75
+2020,4,MishapClassification,F,4,6.0,-2.0,6.75
+2021,1,MishapClassification,F,2,4.0,-2.0,4.75
+2021,2,MishapClassification,F,4,2.0,2.0,4.0
+2021,3,MishapClassification,F,3,4.0,-1.0,3.25
+2022,1,MishapClassification,F,1,3.0,-2.0,2.5
+2022,4,MishapClassification,F,2,1.0,1.0,2.5
+2023,1,MishapClassification,F,9,2.0,7.0,3.75
+2023,2,MishapClassification,F,1,9.0,-8.0,3.25
+2023,3,MishapClassification,F,4,1.0,3.0,4.0
+1900,1,MishapClassification,P,1,0.0,1.0,1.0
+1900,2,MishapClassification,P,1,1.0,0.0,1.0
+1947,1,MishapClassification,P,1,1.0,0.0,1.0
+1960,3,MishapClassification,P,1,1.0,0.0,1.0
+1969,4,MishapClassification,P,1,1.0,0.0,1.0
+1971,4,MishapClassification,P,1,1.0,0.0,1.0
+1972,3,MishapClassification,P,1,1.0,0.0,1.0
+1972,4,MishapClassification,P,1,1.0,0.0,1.0
+1977,3,MishapClassification,P,1,1.0,0.0,1.0
+1979,3,MishapClassification,P,1,1.0,0.0,1.0
+1980,4,MishapClassification,P,1,1.0,0.0,1.0
+1983,1,MishapClassification,P,3,1.0,2.0,1.5
+1985,2,MishapClassification,P,1,3.0,-2.0,1.5
+1985,3,MishapClassification,P,1,1.0,0.0,1.5
+1986,2,MishapClassification,P,1,1.0,0.0,1.5
+1988,1,MishapClassification,P,1,1.0,0.0,1.0
+1988,2,MishapClassification,P,1,1.0,0.0,1.0
+2010,3,MishapClassification,P,1,1.0,0.0,1.0
+2010,4,MishapClassification,P,2,1.0,1.0,1.25
+2011,1,MishapClassification,P,1,2.0,-1.0,1.25
+2011,2,MishapClassification,P,1,1.0,0.0,1.25
+2011,4,MishapClassification,P,1,1.0,0.0,1.25
+2012,1,MishapClassification,P,1,1.0,0.0,1.0
+2012,2,MishapClassification,P,1,1.0,0.0,1.0
+2014,1,MishapClassification,P,4,1.0,3.0,1.75
+2014,2,MishapClassification,P,3,4.0,-1.0,2.25
+2015,1,MishapClassification,P,3,3.0,0.0,2.75
+2015,2,MishapClassification,P,1,3.0,-2.0,2.75
+2015,4,MishapClassification,P,1,1.0,0.0,2.0
+2016,1,MishapClassification,P,1,1.0,0.0,1.5
+2016,2,MishapClassification,P,1,1.0,0.0,1.0
+2016,3,MishapClassification,P,2,1.0,1.0,1.25
+2017,4,MishapClassification,P,1,2.0,-1.0,1.25
+2018,1,MishapClassification,P,2,1.0,1.0,1.5
+2018,2,MishapClassification,P,2,2.0,0.0,1.75
+2018,3,MishapClassification,P,1,2.0,-1.0,1.5
+2018,4,MishapClassification,P,2,1.0,1.0,1.75
+2019,1,MishapClassification,P,31,2.0,29.0,9.0
+2019,2,MishapClassification,P,3,31.0,-28.0,9.25
+2019,3,MishapClassification,P,7,3.0,4.0,10.75
+2019,4,MishapClassification,P,509,7.0,502.0,137.5
+2020,1,MishapClassification,P,1841,509.0,1332.0,590.0
+2020,2,MishapClassification,P,941,1841.0,-900.0,824.5
+2020,3,MishapClassification,P,636,941.0,-305.0,981.75
+2020,4,MishapClassification,P,577,636.0,-59.0,998.75
+2021,1,MishapClassification,P,349,577.0,-228.0,625.75
+2021,2,MishapClassification,P,292,349.0,-57.0,463.5
+2021,3,MishapClassification,P,261,292.0,-31.0,369.75
+2021,4,MishapClassification,P,191,261.0,-70.0,273.25
+2022,1,MishapClassification,P,280,191.0,89.0,256.0
+2022,2,MishapClassification,P,194,280.0,-86.0,231.5
+2022,3,MishapClassification,P,167,194.0,-27.0,208.0
+2022,4,MishapClassification,P,29,167.0,-138.0,167.5
+2023,1,MishapClassification,P,60,29.0,31.0,112.5
+2023,2,MishapClassification,P,59,60.0,-1.0,78.75
+2023,3,MishapClassification,P,149,59.0,90.0,74.25
+2023,4,MishapClassification,P,136,149.0,-13.0,101.0
+2024,1,MishapClassification,P,346,136.0,210.0,172.5
+2024,2,MishapClassification,P,168,346.0,-178.0,199.75
+2024,3,MishapClassification,P,58,168.0,-110.0,177.0
+2024,4,MishapClassification,P,101,58.0,43.0,168.25
+2025,1,MishapClassification,P,390,101.0,289.0,179.25
+2025,2,MishapClassification,P,63,390.0,-327.0,153.0
+2025,3,MishapClassification,P,5,63.0,-58.0,139.75
+2020,1,MishapClassification,R,27,0.0,27.0,27.0
+2020,2,MishapClassification,R,14,27.0,-13.0,20.5
+2020,3,MishapClassification,R,30,14.0,16.0,23.666666666666668
+2020,4,MishapClassification,R,7,30.0,-23.0,19.5
+2021,3,MishapClassification,R,1,7.0,-6.0,13.0
+2021,4,MishapClassification,R,1,1.0,0.0,9.75
+2022,2,MishapClassification,R,9,1.0,8.0,4.5
+2022,3,MishapClassification,R,30,9.0,21.0,10.25
+2022,4,MishapClassification,R,1,30.0,-29.0,10.25
+2023,3,MishapClassification,R,3,1.0,2.0,10.75
+2023,4,MishapClassification,R,4,3.0,1.0,9.5
+2024,1,MishapClassification,R,5,4.0,1.0,3.25
+1971,4,MishapClassification,Unknown,1,0.0,1.0,1.0
+1995,2,MishapClassification,Unknown,1,1.0,0.0,1.0
+1999,2,MishapClassification,Unknown,1,1.0,0.0,1.0
+2002,1,MishapClassification,Unknown,2,1.0,1.0,1.25
+2013,4,MishapClassification,Unknown,1,2.0,-1.0,1.25
+2014,1,MishapClassification,Unknown,3,1.0,2.0,1.75
+2018,1,MishapClassification,Unknown,3,3.0,0.0,2.25
+2018,3,MishapClassification,Unknown,1,3.0,-2.0,2.0
+2019,1,MishapClassification,Unknown,2,1.0,1.0,2.25
+2019,2,MishapClassification,Unknown,1,2.0,-1.0,1.75
+2019,4,MishapClassification,Unknown,85,1.0,84.0,22.25
+2020,1,MishapClassification,Unknown,143,85.0,58.0,57.75
+2020,2,MishapClassification,Unknown,197,143.0,54.0,106.5
+2020,3,MishapClassification,Unknown,74,197.0,-123.0,124.75
+2020,4,MishapClassification,Unknown,115,74.0,41.0,132.25
+2021,1,MishapClassification,Unknown,127,115.0,12.0,128.25
+2021,2,MishapClassification,Unknown,42,127.0,-85.0,89.5
+2021,3,MishapClassification,Unknown,74,42.0,32.0,89.5
+2021,4,MishapClassification,Unknown,54,74.0,-20.0,74.25
+2022,1,MishapClassification,Unknown,19,54.0,-35.0,47.25
+2022,2,MishapClassification,Unknown,11,19.0,-8.0,39.5
+2022,3,MishapClassification,Unknown,15,11.0,4.0,24.75
+2022,4,MishapClassification,Unknown,6,15.0,-9.0,12.75
+2023,1,MishapClassification,Unknown,6,6.0,0.0,9.5
+2023,2,MishapClassification,Unknown,14,6.0,8.0,10.25
+2023,3,MishapClassification,Unknown,52,14.0,38.0,19.5
+2023,4,MishapClassification,Unknown,27,52.0,-25.0,24.75
+2024,1,MishapClassification,Unknown,76,27.0,49.0,42.25
+2024,2,MishapClassification,Unknown,9,76.0,-67.0,41.0
+2024,3,MishapClassification,Unknown,9,9.0,0.0,30.25
+2024,4,MishapClassification,Unknown,21,9.0,12.0,28.75
+2025,1,MishapClassification,Unknown,157,21.0,136.0,49.0
+2025,2,MishapClassification,Unknown,48,157.0,-109.0,58.75
+2020,1,MishapClassification,X,18,0.0,18.0,18.0
+2021,2,MishapClassification,X,11,18.0,-7.0,14.5
+2022,2,MishapClassification,X,4,11.0,-7.0,11.0
+2023,1,MishapClassification,X,2,4.0,-2.0,8.75
+2023,3,MishapClassification,X,4,2.0,2.0,5.25
+2024,1,MishapClassification,X,8,4.0,4.0,4.5
+2025,2,MishapClassification,X,1,8.0,-7.0,3.75
+1977,3,MishapType,Aviation,1,0.0,1.0,1.0
+1980,4,MishapType,Aviation,1,1.0,0.0,1.0
+1983,1,MishapType,Aviation,1,1.0,0.0,1.0
+1983,2,MishapType,Aviation,1,1.0,0.0,1.0
+1985,2,MishapType,Aviation,1,1.0,0.0,1.0
+1985,3,MishapType,Aviation,1,1.0,0.0,1.0
+1988,2,MishapType,Aviation,1,1.0,0.0,1.0
+1990,1,MishapType,Aviation,1,1.0,0.0,1.0
+1998,3,MishapType,Aviation,1,1.0,0.0,1.0
+1999,2,MishapType,Aviation,1,1.0,0.0,1.0
+2000,1,MishapType,Aviation,1,1.0,0.0,1.0
+2000,2,MishapType,Aviation,1,1.0,0.0,1.0
+2000,4,MishapType,Aviation,2,1.0,1.0,1.25
+2002,1,MishapType,Aviation,1,2.0,-1.0,1.25
+2003,2,MishapType,Aviation,1,1.0,0.0,1.25
+2005,3,MishapType,Aviation,1,1.0,0.0,1.25
+2008,4,MishapType,Aviation,1,1.0,0.0,1.0
+2009,3,MishapType,Aviation,1,1.0,0.0,1.0
+2010,1,MishapType,Aviation,1,1.0,0.0,1.0
+2010,4,MishapType,Aviation,1,1.0,0.0,1.0
+2012,1,MishapType,Aviation,1,1.0,0.0,1.0
+2014,1,MishapType,Aviation,2,1.0,1.0,1.25
+2014,2,MishapType,Aviation,1,2.0,-1.0,1.25
+2016,2,MishapType,Aviation,2,1.0,1.0,1.5
+2017,4,MishapType,Aviation,1,2.0,-1.0,1.5
+2018,1,MishapType,Aviation,1,1.0,0.0,1.25
+2018,2,MishapType,Aviation,1,1.0,0.0,1.25
+2018,3,MishapType,Aviation,1,1.0,0.0,1.0
+2019,1,MishapType,Aviation,1,1.0,0.0,1.0
+2019,3,MishapType,Aviation,5,1.0,4.0,2.0
+2019,4,MishapType,Aviation,270,5.0,265.0,69.25
+2020,1,MishapType,Aviation,909,270.0,639.0,296.25
+2020,2,MishapType,Aviation,627,909.0,-282.0,452.75
+2020,3,MishapType,Aviation,366,627.0,-261.0,543.0
+2020,4,MishapType,Aviation,269,366.0,-97.0,542.75
+2021,1,MishapType,Aviation,221,269.0,-48.0,370.75
+2021,2,MishapType,Aviation,273,221.0,52.0,282.25
+2021,3,MishapType,Aviation,132,273.0,-141.0,223.75
+2021,4,MishapType,Aviation,70,132.0,-62.0,174.0
+2022,1,MishapType,Aviation,95,70.0,25.0,142.5
+2022,2,MishapType,Aviation,61,95.0,-34.0,89.5
+2022,3,MishapType,Aviation,36,61.0,-25.0,65.5
+2022,4,MishapType,Aviation,35,36.0,-1.0,56.75
+2023,1,MishapType,Aviation,42,35.0,7.0,43.5
+2023,2,MishapType,Aviation,39,42.0,-3.0,38.0
+2023,3,MishapType,Aviation,135,39.0,96.0,62.75
+2023,4,MishapType,Aviation,64,135.0,-71.0,70.0
+2024,1,MishapType,Aviation,94,64.0,30.0,83.0
+2024,2,MishapType,Aviation,37,94.0,-57.0,82.5
+2024,3,MishapType,Aviation,13,37.0,-24.0,52.0
+2024,4,MishapType,Aviation,98,13.0,85.0,60.5
+2025,1,MishapType,Aviation,75,98.0,-23.0,55.75
+2025,2,MishapType,Aviation,64,75.0,-11.0,62.5
+2025,3,MishapType,Aviation,4,64.0,-60.0,60.25
+1900,1,MishapType,Ground,1,0.0,1.0,1.0
+1900,2,MishapType,Ground,1,1.0,0.0,1.0
+1947,1,MishapType,Ground,1,1.0,0.0,1.0
 1960,3,MishapType,Ground,1,1.0,0.0,1.0
 1969,4,MishapType,Ground,1,1.0,0.0,1.0
 1971,4,MishapType,Ground,2,1.0,1.0,1.25
@@ -83,7 +458,138 @@ year,quarter,entity_type,entity_value,mishap_count,prev_qtr_count,qoq_change,rol
 2025,2,MishapType,Ground,170,713.0,-543.0,300.75
 2025,3,MishapType,Ground,6,170.0,-164.0,271.75
 2025,4,MishapType,Ground,1,6.0,-5.0,222.5
-2026,1,MishapType,Ground,189,1.0,188.0,91.5
-2026,2,MishapType,Ground,117,189.0,-72.0,78.25
-2026,3,MishapType,Ground,81,117.0,-36.0,97.0
-2026,4,MishapType,Ground,98,81.0,17.0,121.25
+1971,4,Source,Initial Notification,1,0.0,1.0,1.0
+1995,1,Source,Initial Notification,1,1.0,0.0,1.0
+1995,2,Source,Initial Notification,1,1.0,0.0,1.0
+1999,2,Source,Initial Notification,1,1.0,0.0,1.0
+2000,1,Source,Initial Notification,1,1.0,0.0,1.0
+2000,4,Source,Initial Notification,1,1.0,0.0,1.0
+2001,1,Source,Initial Notification,1,1.0,0.0,1.0
+2002,1,Source,Initial Notification,3,1.0,2.0,1.5
+2004,1,Source,Initial Notification,1,3.0,-2.0,1.5
+2013,4,Source,Initial Notification,1,1.0,0.0,1.5
+2014,1,Source,Initial Notification,3,1.0,2.0,2.0
+2014,2,Source,Initial Notification,1,3.0,-2.0,1.5
+2017,1,Source,Initial Notification,1,1.0,0.0,1.5
+2018,1,Source,Initial Notification,4,1.0,3.0,2.25
+2018,3,Source,Initial Notification,2,4.0,-2.0,2.0
+2019,1,Source,Initial Notification,3,2.0,1.0,2.5
+2019,2,Source,Initial Notification,1,3.0,-2.0,2.5
+2019,4,Source,Initial Notification,126,1.0,125.0,33.0
+2020,1,Source,Initial Notification,615,126.0,489.0,186.25
+2020,2,Source,Initial Notification,533,615.0,-82.0,318.75
+2020,3,Source,Initial Notification,279,533.0,-254.0,388.25
+2020,4,Source,Initial Notification,265,279.0,-14.0,423.0
+2021,1,Source,Initial Notification,293,265.0,28.0,342.5
+2021,2,Source,Initial Notification,232,293.0,-61.0,267.25
+2021,3,Source,Initial Notification,237,232.0,5.0,256.75
+2021,4,Source,Initial Notification,158,237.0,-79.0,230.0
+2022,1,Source,Initial Notification,108,158.0,-50.0,183.75
+2022,2,Source,Initial Notification,71,108.0,-37.0,143.5
+2022,3,Source,Initial Notification,95,71.0,24.0,108.0
+2022,4,Source,Initial Notification,31,95.0,-64.0,76.25
+2023,1,Source,Initial Notification,27,31.0,-4.0,56.0
+2023,2,Source,Initial Notification,58,27.0,31.0,52.75
+2023,3,Source,Initial Notification,90,58.0,32.0,51.5
+2023,4,Source,Initial Notification,73,90.0,-17.0,62.0
+2024,1,Source,Initial Notification,138,73.0,65.0,89.75
+2024,2,Source,Initial Notification,15,138.0,-123.0,79.0
+2024,3,Source,Initial Notification,20,15.0,5.0,61.5
+2024,4,Source,Initial Notification,69,20.0,49.0,60.5
+2025,1,Source,Initial Notification,247,69.0,178.0,87.75
+2025,2,Source,Initial Notification,121,247.0,-126.0,114.25
+1900,1,Source,Mishap Report,1,0.0,1.0,1.0
+1900,2,Source,Mishap Report,1,1.0,0.0,1.0
+1947,1,Source,Mishap Report,1,1.0,0.0,1.0
+1960,3,Source,Mishap Report,1,1.0,0.0,1.0
+1969,4,Source,Mishap Report,1,1.0,0.0,1.0
+1971,4,Source,Mishap Report,1,1.0,0.0,1.0
+1972,3,Source,Mishap Report,1,1.0,0.0,1.0
+1972,4,Source,Mishap Report,2,1.0,1.0,1.25
+1977,3,Source,Mishap Report,1,2.0,-1.0,1.25
+1979,3,Source,Mishap Report,1,1.0,0.0,1.25
+1980,4,Source,Mishap Report,2,1.0,1.0,1.5
+1983,1,Source,Mishap Report,3,2.0,1.0,1.75
+1983,2,Source,Mishap Report,1,3.0,-2.0,1.75
+1983,3,Source,Mishap Report,1,1.0,0.0,1.75
+1985,2,Source,Mishap Report,1,1.0,0.0,1.5
+1985,3,Source,Mishap Report,1,1.0,0.0,1.0
+1986,2,Source,Mishap Report,1,1.0,0.0,1.0
+1988,1,Source,Mishap Report,1,1.0,0.0,1.0
+1988,2,Source,Mishap Report,1,1.0,0.0,1.0
+1989,1,Source,Mishap Report,1,1.0,0.0,1.0
+1990,1,Source,Mishap Report,2,1.0,1.0,1.25
+1990,2,Source,Mishap Report,1,2.0,-1.0,1.25
+1991,3,Source,Mishap Report,1,1.0,0.0,1.25
+1993,2,Source,Mishap Report,1,1.0,0.0,1.25
+1995,1,Source,Mishap Report,1,1.0,0.0,1.0
+1995,2,Source,Mishap Report,1,1.0,0.0,1.0
+1995,3,Source,Mishap Report,1,1.0,0.0,1.0
+1998,3,Source,Mishap Report,1,1.0,0.0,1.0
+2000,1,Source,Mishap Report,4,1.0,3.0,1.75
+2000,2,Source,Mishap Report,2,4.0,-2.0,2.0
+2000,3,Source,Mishap Report,3,2.0,1.0,2.5
+2000,4,Source,Mishap Report,2,3.0,-1.0,2.75
+2001,1,Source,Mishap Report,1,2.0,-1.0,2.0
+2003,2,Source,Mishap Report,1,1.0,0.0,1.75
+2004,2,Source,Mishap Report,1,1.0,0.0,1.25
+2005,3,Source,Mishap Report,1,1.0,0.0,1.0
+2008,4,Source,Mishap Report,1,1.0,0.0,1.0
+2009,3,Source,Mishap Report,1,1.0,0.0,1.0
+2009,4,Source,Mishap Report,1,1.0,0.0,1.0
+2010,1,Source,Mishap Report,4,1.0,3.0,1.75
+2010,3,Source,Mishap Report,1,4.0,-3.0,1.75
+2010,4,Source,Mishap Report,2,1.0,1.0,2.0
+2011,1,Source,Mishap Report,1,2.0,-1.0,2.0
+2011,2,Source,Mishap Report,1,1.0,0.0,1.25
+2011,4,Source,Mishap Report,1,1.0,0.0,1.25
+2012,1,Source,Mishap Report,5,1.0,4.0,2.0
+2012,2,Source,Mishap Report,2,5.0,-3.0,2.25
+2013,3,Source,Mishap Report,1,2.0,-1.0,2.25
+2013,4,Source,Mishap Report,1,1.0,0.0,2.25
+2014,1,Source,Mishap Report,6,1.0,5.0,2.5
+2014,2,Source,Mishap Report,2,6.0,-4.0,2.5
+2014,3,Source,Mishap Report,1,2.0,-1.0,2.5
+2015,1,Source,Mishap Report,4,1.0,3.0,3.25
+2015,2,Source,Mishap Report,1,4.0,-3.0,2.0
+2015,3,Source,Mishap Report,2,1.0,1.0,2.0
+2015,4,Source,Mishap Report,1,2.0,-1.0,2.0
+2016,1,Source,Mishap Report,2,1.0,1.0,1.5
+2016,2,Source,Mishap Report,2,2.0,0.0,1.75
+2016,3,Source,Mishap Report,2,2.0,0.0,1.75
+2017,1,Source,Mishap Report,2,2.0,0.0,2.0
+2017,2,Source,Mishap Report,1,2.0,-1.0,1.75
+2017,4,Source,Mishap Report,1,1.0,0.0,1.5
+2018,1,Source,Mishap Report,7,1.0,6.0,2.75
+2018,2,Source,Mishap Report,4,7.0,-3.0,3.25
+2018,3,Source,Mishap Report,3,4.0,-1.0,3.75
+2018,4,Source,Mishap Report,4,3.0,1.0,4.5
+2019,1,Source,Mishap Report,49,4.0,45.0,15.0
+2019,2,Source,Mishap Report,6,49.0,-43.0,15.5
+2019,3,Source,Mishap Report,17,6.0,11.0,19.0
+2019,4,Source,Mishap Report,804,17.0,787.0,219.0
+2020,1,Source,Mishap Report,2495,804.0,1691.0,830.5
+2020,2,Source,Mishap Report,1450,2495.0,-1045.0,1191.5
+2020,3,Source,Mishap Report,1132,1450.0,-318.0,1470.25
+2020,4,Source,Mishap Report,893,1132.0,-239.0,1492.5
+2021,1,Source,Mishap Report,549,893.0,-344.0,1006.0
+2021,2,Source,Mishap Report,491,549.0,-58.0,766.25
+2021,3,Source,Mishap Report,405,491.0,-86.0,584.5
+2021,4,Source,Mishap Report,297,405.0,-108.0,435.5
+2022,1,Source,Mishap Report,452,297.0,155.0,411.25
+2022,2,Source,Mishap Report,411,452.0,-41.0,391.25
+2022,3,Source,Mishap Report,545,411.0,134.0,426.25
+2022,4,Source,Mishap Report,167,545.0,-378.0,393.75
+2023,1,Source,Mishap Report,292,167.0,125.0,353.75
+2023,2,Source,Mishap Report,200,292.0,-92.0,301.0
+2023,3,Source,Mishap Report,311,200.0,111.0,242.5
+2023,4,Source,Mishap Report,233,311.0,-78.0,259.0
+2024,1,Source,Mishap Report,567,233.0,334.0,327.75
+2024,2,Source,Mishap Report,347,567.0,-220.0,364.5
+2024,3,Source,Mishap Report,115,347.0,-232.0,315.5
+2024,4,Source,Mishap Report,227,115.0,112.0,314.0
+2025,1,Source,Mishap Report,541,227.0,314.0,307.5
+2025,2,Source,Mishap Report,113,541.0,-428.0,249.0
+2025,3,Source,Mishap Report,10,113.0,-103.0,222.75
+2025,4,Source,Mishap Report,1,10.0,-9.0,166.25
+2020,2,Source,Near Miss,33,0.0,33.0,33.0

@@ -15,12 +15,6 @@ from src.config import MODEL_DIR, PROCESSED_DATA_DIR
 app = Flask(__name__)
 CORS(app)
 
-# Load model ONCE
-model = joblib.load(MODEL_DIR / "rf_mishap_model.pkl")
-
-# Ensure features are built
-build_features()  
-
 # Load historical features ONCE
 df_features = pd.read_csv(PROCESSED_DATA_DIR / "features.csv")
 
@@ -36,8 +30,7 @@ def predict():
           return jsonify({"error": "entity_type and entity_value are required"}), 400
      
      try:
-          preds_df, importance_df = predict_future_quarters(
-                                        model=model,
+          preds_df = predict_future_quarters(
                                         df_features=df_features,
                                         entity_type=entity_type,
                                         entity_value=entity_value,
@@ -45,8 +38,7 @@ def predict():
                                    )
 
           return jsonify({
-               "predictions": preds_df.to_dict(orient='records'),
-               "feature_importance": importance_df.to_dict(orient='records')
+               "predictions": preds_df.to_dict(orient='records')
           })
      
      except Exception as e:

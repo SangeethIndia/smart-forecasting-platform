@@ -16,7 +16,6 @@ df = pd.read_csv(PROCESSED_DATA_DIR / "features.csv")
 model = joblib.load(MODEL_DIR / "rf_mishap_model.pkl")
 
 preds = predict_future_quarters(
-    model=model,
     df_features=df,
     entity_type="MishapType",
     entity_value="Aviation",

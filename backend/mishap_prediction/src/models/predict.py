@@ -1,23 +1,22 @@
 import pandas as pd
 from pathlib import Path
-import joblib
 import sys
 
 PROJECT_ROOT = Path().resolve()
 sys.path.append(str(PROJECT_ROOT))
 
-from src.preprocessing.build_features import build_features
+from ensemble import MishapEnsembler
+from src.preprocessing.build_features import compute_feature_values
 from src.config import MODEL_DIR
 
 MODEL_FEATURES_FILE = MODEL_DIR / "model_features.pkl"
+ensembler = MishapEnsembler()
 
 def predict_future_quarters(
-          model,
           df_features,
           entity_type,
           entity_value,
-          n_quarters=4,
-          encoder_columns=None
+          n_quarters=4
 ):
      """
      Predict future quarterly mishap counts using recursive logic. 
@@ -40,7 +39,6 @@ def predict_future_quarters(
 
      # Step 3: Recursive forecasting loop
      for _ in range(n_quarters):
-
           # Get the last known (predicted) row
           last_row = current_df.iloc[-1]
 
@@ -53,65 +51,49 @@ def predict_future_quarters(
             next_quarter = last_row["quarter"] + 1
 
           # Step 5: Compute feature values
-
-          # Previous quarter mishap count
-          prev_qtr_count = last_row["mishap_count"]
-
-          # Quarter-on-quarter change
-          qoq_change = last_row["mishap_count"] - last_row["prev_qtr_count"]
-
-          # Rolling 4-quarter average (use last 3 quarters + current prediction)
-          rolling_4q_avg = (
-                    current_df["mishap_count"]
-                    .tail(4)
-                    .mean()
-               )
-
-          # Step 6: Build input row for the model
           input_row = {
-              "year": next_year,
-              "quarter": next_quarter,
-              "prev_qtr_count": prev_qtr_count,
-              "qoq_change": qoq_change,
-              "rolling_4q_avg": rolling_4q_avg,
-              "entity_type": entity_type,
-              "entity_value": entity_value
+               "entity_type": entity_type,
+               "entity_value": entity_value,
+               "year": next_year,
+               "quarter": next_quarter,
+               "prev_qtr_count": last_row["mishap_count"],
+               "qoq_change": 0, # This is what will be predicted by our model
+               "rolling_4q_avg": current_df["mishap_count"].tail(4).mean()
           }
 
           input_df = pd.DataFrame([input_row])
 
-          # Step 7: One-hot encode categorical variables
-          input_df_encoded = pd.get_dummies(input_df, columns=['entity_type', 'entity_value'], drop_first=False)
+          # Predict qoq change (Pipeline predicts the delta in mishap count)
 
-          model_features = joblib.load(MODEL_FEATURES_FILE)
+          qoq_change = ensembler.predict(input_df)[0]
 
-          input_df_encoded = input_df_encoded.reindex(columns=model_features, fill_value=0)
+          # Convert back to absolute mishap count
+          predicted_mishap_count = last_row["mishap_count"] + qoq_change
+          predicted_mishap_count = max(0, round(predicted_mishap_count))
 
-          assert set(input_df_encoded.columns) == set(model_features), "Feature mismatch after encoding"
-
-          # Step 8: Make prediction
-          predicted_value = model.predict(input_df_encoded)[0]
-          predicted_value = max(0, round(predicted_value))  # Ensure non-negative integer
-
-         # Step 9: Create the next row
           next_row = {
               "year": next_year,
               "quarter": next_quarter,
               "entity_type": entity_type,
               "entity_value": entity_value,
-              "mishap_count": predicted_value
+              "mishap_count": predicted_mishap_count
           }
 
           current_df = pd.concat([current_df, pd.DataFrame([next_row])], ignore_index=True)
+          current_df = compute_feature_values(current_df)
           future_predictions.append(next_row)
-          build_features(current_df)
 
-     importance_df = get_feature_importance(model, model_features)
-     return pd.DataFrame(future_predictions), importance_df
+     return pd.DataFrame(future_predictions)
 
-def get_feature_importance(model, feature_names):
+def get_feature_importance(pipeline, feature_names):
+     model = pipeline.named_steps['model']
+     importances = model.feature_importances_
+
+     feature_names = (pipeline.named_steps['preprocess']
+                              .get_feature_names_out())
+     
      return pd.DataFrame({
                'feature': feature_names,
-               'importance': model.feature_importances_
+               'importance': importances
           }).sort_values(by='importance', ascending=False)
      
