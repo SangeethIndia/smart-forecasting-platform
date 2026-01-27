@@ -10,6 +10,7 @@ Chart.register(...registerables);
 export class MlChartComponent implements AfterViewInit, OnChanges {
 
   @Input() data: any[] = [];
+  @Input() mode: 'year' | 'quarter' | 'classification' = 'year';
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   chart!: Chart;
 
@@ -30,6 +31,10 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
         this.render();
       }
     }
+    // If mode changed and chart exists, re-render to update axis title/labels
+    if (changes['mode'] && this.canvas && this.chart) {
+      this.updateChart();
+    }
   }
 
   render() {
@@ -45,46 +50,145 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
       // ignore in non-browser environments
     }
 
-    // Build labels as "Year Q<quarter>" when possible, otherwise fallback to label or quarter
-    const labels = this.data.map(d => {
-      const year = d?.year ?? d?.y ?? null;
-      const quarter = d?.quarter ?? d?.q ?? null;
-      if (year != null && quarter != null) return `${year} Q${quarter}`;
-      if (year != null) return `${year}`;
-      if (quarter != null) return `Q${quarter}`;
-      return d?.label ?? '';
+    // Build labels (unique, sorted) as "Year Q<quarter>" or year-only or provided label
+    const rows = this.data.map(d => ({
+      year: (d?.year ?? d?.y) as number | null,
+      quarter: (d?.quarter ?? d?.q) as number | null,
+      label: d?.label ?? null
+    }));
+
+    // create unique label keys and human labels
+    const labelMap = new Map<string, string>();
+    rows.forEach(r => {
+      const key = (r.year != null ? `${r.year}` : '') + (r.quarter != null ? `-Q${r.quarter}` : '') + (r.label && r.year == null && r.quarter == null ? `-${r.label}` : '');
+      let human = '';
+      if (r.year != null && r.quarter != null) {
+        human = (this.mode === 'year') ? `${r.year}` : `${r.year} Q${r.quarter}`;
+      } else if (r.year != null) human = `${r.year}`;
+      else if (r.quarter != null) human = `Q${r.quarter}`;
+      else human = r.label ?? '';
+      if (!labelMap.has(key)) labelMap.set(key, human);
     });
 
-    // Use mishap_count as primary Y value, fallback to predicted_value or value
-    const values = this.data.map(d => Number(d?.mishap_count ?? d?.predicted_value ?? d?.value ?? 0));
+    // sort labels by year then quarter when possible
+    const labels = Array.from(labelMap.keys()).sort((a, b) => {
+      const aParts = a.split('-');
+      const bParts = b.split('-');
+      const aYear = Number(aParts[0]) || 0;
+      const bYear = Number(bParts[0]) || 0;
+      if (aYear !== bYear) return aYear - bYear;
+      const aQ = aParts.find(p => p.startsWith('Q'))?.replace('Q', '') || '0';
+      const bQ = bParts.find(p => p.startsWith('Q'))?.replace('Q', '') || '0';
+      return Number(aQ) - Number(bQ);
+    }).map(k => labelMap.get(k) as string);
+
+    // Group data by entity_value only (ignore data_type) so actual and predicted
+    // points for the same entity render as a single continuous series.
+    const groups = new Map<string, any[]>();
+    this.data.forEach(d => {
+      const entity = d?.entity_value ?? 'unknown';
+      const key = `${entity}`;
+      // Keep only row-level entities (e.g. 'Aviation', 'Ground').
+      // Exclude rows that have container/source labels like 'Mishap Report' or
+      // 'Near Miss' which are not entity values to be plotted.
+      // NOTE: DO NOT REMOVE the condition below – it's intentionally filtering
+      // out non-entity rows that would otherwise show up as series.
+      if (d?.entity_value != 'Mishap Report' && d?.entity_value != 'Near Miss') {
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key)!.push(d);
+      }
+    });
+
+    // color mapping for known entities
+    let colorMap: Record<string, string>;
+
+    if (this.mode == 'year') {
+      colorMap = { Aviation: '#1f77b4', Ground: '#ff7f0e' };
+    }
+    else if (this.mode == 'quarter') {
+      colorMap = { Aviation: '#1f77b4', Ground: '#ff7f0e' };
+    }
+    else if (this.mode == 'classification') {
+      colorMap = {
+                    A: '#2ca02c', // green
+                    B: '#d62728', // red
+                    C: '#9467bd', // purple
+                    D: '#8c564b', // brown
+                    E: '#17becf'  // teal
+                  };
+    }
+    
+
+    const datasets = Array.from(groups.entries()).map(([entity, items]) => {
+      // build a map of label->value for this group. If both 'actual' and
+      // 'predicted' entries exist for the same label, prefer the actual value.
+      const valueMap = new Map<string, { value: number; hasActual: boolean }>();
+      items.forEach(it => {
+        const year = (it?.year ?? it?.y) as number | undefined;
+        const quarter = (it?.quarter ?? it?.q) as number | undefined;
+        let k = '';
+        if (year != null && quarter != null) k = `${year}-Q${quarter}`;
+        else if (year != null) k = `${year}`;
+        else if (quarter != null) k = `Q${quarter}`;
+        else k = it?.label ?? '';
+        const value = Number(it?.mishap_count ?? it?.predicted_value ?? it?.value ?? 0);
+        const dtype = it?.data_type ?? 'actual';
+        const existing = valueMap.get(k);
+        if (!existing) {
+          valueMap.set(k, { value, hasActual: dtype === 'actual' });
+        } else {
+          // if existing is actual, keep it; otherwise replace with actual or latest
+          if (!existing.hasActual && dtype === 'actual') {
+            valueMap.set(k, { value, hasActual: true });
+          } else if (!existing.hasActual && dtype !== 'actual') {
+            // keep last-known predicted value (no-op - already set)
+            valueMap.set(k, { value: valueMap.get(k) ? value : value, hasActual: false });
+          }
+        }
+      });
+
+      // align data with labels array
+      const dataArr = labels.map(lbl => {
+        const m = lbl.match(/^(\d{4}) Q(\d)$/);
+        let k = lbl;
+        if (m) k = `${m[1]}-Q${m[2]}`;
+        else if (/^\d{4}$/.test(lbl)) k = lbl;
+        else if (/^Q\d$/.test(lbl)) k = lbl;
+        const entry = valueMap.get(k);
+        return entry ? entry.value : null;
+      });
+
+      const color = colorMap[entity] ?? `hsl(${Math.abs(entity.length * 37) % 360} 70% 45%)`;
+      return {
+        label: `${entity}`,
+        data: dataArr,
+        fill: false,
+        borderColor: color,
+        borderWidth: 3,
+        borderDash: [],
+        pointRadius: 4,
+        pointBackgroundColor: color,
+        tension: 0.2
+      } as any;
+    });
 
     // If chart exists, update its data and redraw
     if (this.chart) {
       this.chart.data.labels = labels as any;
-      if (this.chart.data.datasets && this.chart.data.datasets[0]) {
-        this.chart.data.datasets[0].data = values as any;
-      } else {
-        this.chart.data.datasets = [{ label: 'Future Prediction', data: values } as any];
-      }
+      this.chart.data.datasets = datasets as any;
       this.chart.update();
       return;
     }
+
+  // Determine a reasonable max ticks to avoid overcrowding on X axis
+  const maxXTicks = Math.min(12, labels.length || 12);
 
     // Create new chart
     this.chart = new Chart(this.canvas.nativeElement, {
       type: 'line',
       data: {
         labels,
-        datasets: [{
-          label: 'Mishap Count',
-          data: values,
-          fill: false,
-          borderColor: '#3f51b5',
-          borderWidth: 3,
-          pointRadius: 5,
-          pointBackgroundColor: '#3f51b5',
-          tension: 0.2
-        }]
+        datasets
       },
       options: {
         responsive: true,
@@ -93,14 +197,15 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
           padding: { left: 16, right: 16, top: 8, bottom: 8 }
         },
         plugins: {
-          legend: { display: false }
+          // show legend positioned to the right (beside Y axis) per request
+          legend: { display: true, position: 'right' }
         },
         scales: {
           x: {
             display: true,
             grid: { display: false },
-            title: { display: true, text: 'Year + Quarter' },
-            ticks: { maxRotation: 0, autoSkip: false }
+            title: { display: true, text: (this.mode === 'year' ? 'Year' : 'Year + Quarter') },
+            ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: maxXTicks }
           },
           y: {
             display: true,
@@ -129,20 +234,16 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
 
   private updateChart() {
     // Helper to re-render when data changes
-    if (!this.data?.length || !this.chart) return;
-    const labels = this.data.map(d => {
-      const year = d?.year ?? d?.y ?? null;
-      const quarter = d?.quarter ?? d?.q ?? null;
-      if (year != null && quarter != null) return `${year} Q${quarter}`;
-      if (year != null) return `${year}`;
-      if (quarter != null) return `Q${quarter}`;
-      return d?.label ?? '';
-    });
-    const values = this.data.map(d => Number(d?.mishap_count ?? d?.predicted_value ?? d?.value ?? 0));
-    this.chart.data.labels = labels as any;
-    if (this.chart.data.datasets && this.chart.data.datasets[0]) {
-      this.chart.data.datasets[0].data = values as any;
-    }
-    this.chart.update();
+    if (!this.data?.length) return;
+    // Destroy and re-render to fully rebuild datasets/labels according to mode
+    try {
+      if (this.chart) {
+        this.chart.destroy();
+        // clear reference so render() will create a fresh chart
+        // @ts-ignore
+        this.chart = undefined;
+      }
+    } catch (e) {}
+    this.render();
   }
 }

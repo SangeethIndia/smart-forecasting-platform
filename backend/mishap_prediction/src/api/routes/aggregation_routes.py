@@ -28,9 +28,6 @@ def yearly_trend():
      if start_year:
          df = df[df['year'] >= start_year]
 
-     if end_year:
-         df = df[df['year'] <= end_year]
-
      result = aggregate_volume_by_year_and_classification(df)
 
      return jsonify(result.to_dict(orient='records'))

@@ -1,14 +1,12 @@
-export interface FeatureImportance {
-  feature: string;
-  importance: number;
+export interface YearlyTrend {
+  year: number;
+  mishap_count: number;
+  entity_type: string;
+  entity_value: string;
+  data_type: string;
 }
 
-export interface Prediction {
-  quarter: string;
-  predicted_count: number;
-}
-
-export interface MlResponse {
-  predictions: Prediction[];
-  feature_importance: FeatureImportance[];
+export interface MishapPredictionResponse {
+  predictions: YearlyTrend[];
+  feature_importance?: any;
 }

@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
-import { MlRequest } from "../../../../shared/models/ml-request.model";
+import { MishapPredictionRequest } from "../../../../shared/models/ml-request.model";
 
 @Component({
   standalone: true,
@@ -21,7 +21,7 @@ export class MlFormComponent implements OnInit {
   entityValues: string[] = [];
   quarters: number[] = [1, 2, 3, 4];
 
-  @Output() submitForm = new EventEmitter<MlRequest>();
+  @Output() submitForm = new EventEmitter<MishapPredictionRequest>();
 
   ngOnInit() {
     this.onEntityTypeChange();
@@ -31,7 +31,7 @@ export class MlFormComponent implements OnInit {
     if (this.entityType === 'MishapType') {
       this.entityValues = ['Aviation', 'Ground'];
     } else if (this.entityType === 'MishapClassification') {
-      this.entityValues = ['A', 'B', 'C', 'D'];
+      this.entityValues = ['A', 'B', 'C', 'D', 'E'];
     } else {
       this.entityValues = [];
     }
@@ -43,9 +43,12 @@ export class MlFormComponent implements OnInit {
   }
 
   submit() {
+    // Emit keyed MishapPredictionRequest so the payload matches the backend
+    // { filters: { "MishapType": ["Aviation"] }, n_quarters: 4 }
     this.submitForm.emit({
-      entity_type: this.entityType,
-      entity_value: this.entityValue,
+      filters: {
+        [this.entityType]: [this.entityValue]
+      },
       n_quarters: this.nQuarters
     });
   }
