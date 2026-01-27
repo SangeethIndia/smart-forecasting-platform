@@ -15,4 +15,11 @@ export class MlService {
       payload
     );
   }
+
+  predictQuarterlyData(payload: MishapPredictionRequest) {
+    return this.http.post<MishapPredictionResponse>(
+      `${environment.apiBaseUrl}/api/mishaps/quarterly-prediction`,
+      payload
+    );
+  }
 }

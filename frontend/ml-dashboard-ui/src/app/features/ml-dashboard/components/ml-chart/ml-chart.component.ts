@@ -86,6 +86,9 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
     // points for the same entity render as a single continuous series.
     const groups = new Map<string, any[]>();
     this.data.forEach(d => {
+      if (this.mode === 'quarter' && d?.data_type !== 'predicted') {
+        return;
+      }
       const entity = d?.entity_value ?? 'unknown';
       const key = `${entity}`;
       // Keep only row-level entities (e.g. 'Aviation', 'Ground').
@@ -204,7 +207,7 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
           x: {
             display: true,
             grid: { display: false },
-            title: { display: true, text: (this.mode === 'year' ? 'Year' : 'Year + Quarter') },
+            title: { display: true, text: (this.mode === 'quarter' ? 'Year + Quarter' : 'Year') },
             ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: maxXTicks }
           },
           y: {

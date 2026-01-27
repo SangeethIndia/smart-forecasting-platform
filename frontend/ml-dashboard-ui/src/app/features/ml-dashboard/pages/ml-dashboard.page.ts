@@ -75,6 +75,6 @@ export class MlDashboardPage {
       };
     }
 
-    this.facade.runPrediction(payload);
+    this.facade.runPrediction(payload, this.trendMode == 'quarter');
   }
 }

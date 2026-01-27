@@ -12,25 +12,46 @@ export class MlDashboardFacade {
 
   constructor(private mlService: MlService) {}
 
-  runPrediction(payload: MishapPredictionRequest) {
+  runPrediction(payload: MishapPredictionRequest, isQuarterlyPrediction = false) {
     this.loading$.next(true);
 
-    this.mlService.predict(payload).subscribe({
-      next: (res: any) => {
-        // Backend may return either an array of YearlyTrend items or a
-        // wrapped object { predictions: YearlyTrend[] }. Normalize to the
-        // wrapped form so templates can always use `result.predictions`.
-        if (Array.isArray(res)) {
-          this.result$.next({ predictions: res });
-        } else if (res && Array.isArray(res.predictions)) {
-          this.result$.next(res as MishapPredictionResponse);
-        } else {
-          // unexpected shape; still forward as-is to make debugging easier
-          this.result$.next(res as any);
-        }
-      },
-      error: err => console.error('ML Error', err),
-      complete: () => this.loading$.next(false)
-    });
+    if (isQuarterlyPrediction) {
+      this.mlService.predictQuarterlyData(payload).subscribe({
+        next: (res: any) => {
+          // Backend may return either an array of YearlyTrend items or a
+          // wrapped object { predictions: YearlyTrend[] }. Normalize to the
+          // wrapped form so templates can always use `result.predictions`.
+          if (Array.isArray(res)) {
+            this.result$.next({ predictions: res });
+          } else if (res && Array.isArray(res.predictions)) {
+            this.result$.next(res as MishapPredictionResponse);
+          } else {
+            // unexpected shape; still forward as-is to make debugging easier
+            this.result$.next(res as any);
+          }
+        },
+        error: err => console.error('ML Error', err),
+        complete: () => this.loading$.next(false)
+      });
+    }
+    else {
+      this.mlService.predict(payload).subscribe({
+        next: (res: any) => {
+          // Backend may return either an array of YearlyTrend items or a
+          // wrapped object { predictions: YearlyTrend[] }. Normalize to the
+          // wrapped form so templates can always use `result.predictions`.
+          if (Array.isArray(res)) {
+            this.result$.next({ predictions: res });
+          } else if (res && Array.isArray(res.predictions)) {
+            this.result$.next(res as MishapPredictionResponse);
+          } else {
+            // unexpected shape; still forward as-is to make debugging easier
+            this.result$.next(res as any);
+          }
+        },
+        error: err => console.error('ML Error', err),
+        complete: () => this.loading$.next(false)
+      });
+    }
   }
 }
