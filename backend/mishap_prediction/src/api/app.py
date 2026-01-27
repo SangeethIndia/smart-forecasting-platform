@@ -1,6 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, app, request, jsonify
 from flask_cors import CORS
-import joblib
 import pandas as pd
 import sys
 from pathlib import Path
@@ -10,13 +9,19 @@ sys.path.append(str(PROJECT_ROOT))
 
 from src.models.predict import get_feature_importance, predict_future_quarters
 from src.preprocessing.build_features import build_features
-from src.config import MODEL_DIR, PROCESSED_DATA_DIR
+from data.data_context import DataContext
+from routes.aggregation_routes import aggregation_bp
 
-app = Flask(__name__)
-CORS(app)
+def create_app():
+     app = Flask(__name__)
+     CORS(app)
 
-# Load historical features ONCE
-df_features = pd.read_csv(PROCESSED_DATA_DIR / "features.csv")
+     DataContext.load()
+
+     app.register_blueprint(aggregation_bp, url_prefix='/api/mishaps')
+     return app
+
+app = create_app()
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -31,7 +36,7 @@ def predict():
      
      try:
           preds_df = predict_future_quarters(
-                                        df_features=df_features,
+                                        df_features=DataContext.features(),
                                         entity_type=entity_type,
                                         entity_value=entity_value,
                                         n_quarters=n_quarters

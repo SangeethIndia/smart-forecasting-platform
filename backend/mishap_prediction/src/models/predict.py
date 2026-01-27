@@ -5,7 +5,7 @@ import sys
 PROJECT_ROOT = Path().resolve()
 sys.path.append(str(PROJECT_ROOT))
 
-from ensemble import MishapEnsembler
+from src.models.ensemble import MishapEnsembler
 from src.preprocessing.build_features import compute_feature_values
 from src.config import MODEL_DIR
 
