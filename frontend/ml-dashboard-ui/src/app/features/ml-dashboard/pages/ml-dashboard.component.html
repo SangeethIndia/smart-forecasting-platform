@@ -4,15 +4,15 @@
   <!-- Second-level trend selection -->
   <div class="view-toggle" style="margin-top:12px; display:flex; gap:12px; align-items:center;">
     <label class="toggle-pill" [class.active]="trendMode === 'year'">
-      <input type="radio" name="trendMode" [(ngModel)]="trendMode" value="year" hidden />
+      <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="year" hidden />
       Mishap Trend by Year
     </label>
     <label class="toggle-pill" [class.active]="trendMode === 'quarter'">
-      <input type="radio" name="trendMode" [(ngModel)]="trendMode" value="quarter" hidden />
+      <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="quarter" hidden />
       Mishap Volume by Quarters (Quarters of the Year / Seasonal)
     </label>
     <label class="toggle-pill" [class.active]="trendMode === 'classification'">
-      <input type="radio" name="trendMode" [(ngModel)]="trendMode" value="classification" hidden />
+      <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="classification" hidden />
       Mishap Trend - Volume / Classification
     </label>
   </div>
@@ -26,11 +26,31 @@
   </div>
 
   <!-- Chart-only results -->
-  <ng-container *ngIf="facade.result$ | async as result">
-    <div class="results">
-      <div class="chart-panel">
-  <app-ml-chart [data]="result.predictions" [mode]="trendMode"></app-ml-chart>
-      </div>
+  <div class="results">
+    <div class="chart-panel" style="min-height:520px;">
+      <!-- While loading the drill/aggregate call, reserve the chart space to
+           avoid layout shifts. Show a light placeholder. -->
+      <ng-container *ngIf="(facade.loading$ | async); else showChart">
+        <div style="height:520px;display:flex;align-items:center;justify-content:center;color:#666;background:#fafafa;border-radius:8px;border:1px dashed rgba(0,0,0,0.04);">
+          Loading details...
+        </div>
+      </ng-container>
+      <ng-template #showChart>
+        <ng-container *ngIf="facade.result$ | async as result">
+          <!-- Breadcrumbs / Back for drill-down -->
+          <div *ngIf="breadcrumbs.length" style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+            <button class="secondary" (click)="onBack()" style="padding:6px 12px;border-radius:6px;border:1px solid #ddd;background:#fff;">Back</button>
+            <div style="font-size:14px;color:#444;display:flex;gap:6px;align-items:center;">
+              <ng-container *ngFor="let b of breadcrumbs; let i = index">
+                <span style="font-weight:600">{{b.label}}</span>
+                <span *ngIf="i < (breadcrumbs.length - 1)" style="opacity:0.6">/</span>
+              </ng-container>
+            </div>
+          </div>
+
+          <app-ml-chart [data]="result.predictions" [mode]="chartModeActive" (drill)="onDrill($event)"></app-ml-chart>
+        </ng-container>
+      </ng-template>
     </div>
-  </ng-container>
+  </div>
 </div>

@@ -36,6 +36,7 @@ def train_model():
           df.groupby(['entity_type', 'entity_value'])['mishap_count'].shift(-1) - df['mishap_count']
      )
 
+     # Eliminate Outliers
      df['target_qoq_change'] = df['target_qoq_change'].clip(-50, 50)
 
      df = df.dropna(subset=['target_qoq_change'])
@@ -98,11 +99,11 @@ def train_model():
 
      # 7. Evaluation
 
-     preds = rf_pipeline.predict(X_test)
+     rf_preds = rf_pipeline.predict(X_test)
 
      print("Random Forest Results")
-     print(f"Mean Absolute Error: {mean_absolute_error(y_test, preds)}")
-     print(f"R^2 Score: {r2_score(y_test, preds)}")
+     print(f"Mean Absolute Error: {mean_absolute_error(y_test, rf_preds)}")
+     print(f"R^2 Score: {r2_score(y_test, rf_preds)}")
 
      gb_preds = gb_pipeline.predict(X_test)
 
@@ -110,7 +111,7 @@ def train_model():
      print("MAE:", mean_absolute_error(y_test, gb_preds))
      print("R2 :", r2_score(y_test, gb_preds))
 
-     ensemble_preds = 0.6 * gb_preds + 0.4 * preds
+     ensemble_preds = 0.6 * gb_preds + 0.4 * rf_preds
 
      print("Ensembled Results")
      print("MAE:", mean_absolute_error(y_test, ensemble_preds))
@@ -141,12 +142,16 @@ def train_model():
      print(f"GB Pipeline saved to {GB_PIPELINE_FILE}")
 
      # Take last N points for clarity
-     N = 20
-     y_true = y_test[-N:]
-     y_pred = preds[-N:]
+     mask = (
+          (X_test['entity_type'] == 'MishapType') &
+          (X_test['entity_value'] == 'Aviation')
+     )
+
+     y_true = y_test[mask].values
+     y_pred = gb_pipeline.predict(X_test[mask])
 
      plt.figure(figsize=(10, 5))
-     plt.plot(y_true.values, marker='o', label='Actual QoQ Change')
+     plt.plot(y_true, marker='o', label='Actual QoQ Change')
      plt.plot(y_pred, marker='x', label='Predicted QoQ Change')
 
      plt.axhline(0, linestyle='--', linewidth=1)

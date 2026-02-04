@@ -12,8 +12,8 @@ class MishapEnsembler:
      def __init__(self):
           self.rf_pipeline = joblib.load(MODEL_DIR / "rf_pipeline.joblib")
           self.gb_pipeline = joblib.load(MODEL_DIR / "gb_pipeline.joblib")
-          self.w_rf = 0.4
-          self.w_gb = 0.6
+          self.w_rf = 0.0
+          self.w_gb = 1.0
 
      def predict(self, input_df):
           return (

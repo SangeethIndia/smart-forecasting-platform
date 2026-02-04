@@ -22,4 +22,11 @@ export class MlService {
       payload
     );
   }
+
+  aggregate(payload: any) {
+    return this.http.post<any>(
+      `${environment.apiBaseUrl}/api/mishaps/aggregate`,
+      payload
+    );
+  }
 }

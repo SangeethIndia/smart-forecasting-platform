@@ -54,4 +54,50 @@ export class MlDashboardFacade {
       });
     }
   }
+
+  runAggregate(payload: any) {
+    // Clear current result immediately to hide the old chart while we load
+    // the drill data. The UI reserves the chart space while loading to
+    // avoid layout shifts.
+    try { this.result$.next(null); } catch (e) {}
+    this.loading$.next(true);
+    this.mlService.aggregate(payload).subscribe({
+      next: (res: any) => {
+        // Backend returns flat rows. Transform into the { predictions: [] }
+        // shape expected by the chart where each row contains `entity_value`,
+        // `year` and `mishap_count`.
+        if (Array.isArray(res)) {
+          const mapped = res.map((r: any) => {
+            // Support multiple possible casing for the classification field
+            const cls = r?.MishapClassification ?? r?.mishapclassification ?? r?.MishapClass ?? r?.mishap_classification ?? r?.classification ?? 'Unknown';
+            return {
+              year: (r?.year ?? r?.Year) as number,
+              mishap_count: Number(r?.mishap_count ?? r?.mishapCount ?? r?.count ?? 0),
+              entity_type: 'MishapClassification',
+              entity_value: cls,
+              data_type: 'actual'
+            };
+          });
+          this.result$.next({ predictions: mapped });
+        } else if (res && Array.isArray(res.predictions)) {
+          // already wrapped - but ensure items provide entity_value and year
+          const mapped = (res.predictions as any[]).map((r: any) => ({
+            year: r?.year ?? r?.Year,
+            mishap_count: Number(r?.mishap_count ?? r?.mishapCount ?? r?.count ?? 0),
+            entity_type: r?.entity_type ?? 'MishapClassification',
+            entity_value: r?.MishapClassification ?? r?.mishapclassification ?? r?.entity_value ?? 'Unknown',
+            data_type: r?.data_type ?? 'actual'
+          }));
+          this.result$.next({ predictions: mapped });
+        } else {
+          this.result$.next(res as any);
+        }
+      },
+      error: err => {
+        console.error('Aggregate Error', err);
+        this.loading$.next(false);
+      },
+      complete: () => this.loading$.next(false)
+    });
+  }
 }

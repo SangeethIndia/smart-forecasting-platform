@@ -1,9 +1,8 @@
 from flask import Blueprint, request, jsonify
 from src.config import PROCESSED_DATA_DIR
 from data.data_context import DataContext
-from src.services.prediction_service import get_quarterly_prediction, get_yearwise_trend
+from src.services.prediction_service import get_dynamic_aggregation, get_quarterly_prediction, get_yearwise_trend
 from src.services.aggregation_service import aggregate_volume_by_quarter, aggregate_volume_by_year_and_classification 
-import pandas as pd
 
 aggregation_bp = Blueprint('aggregation', __name__)
 
@@ -53,3 +52,26 @@ def quarterly_prediction():
      result = aggregate_volume_by_quarter(df)
 
      return jsonify(result.to_dict(orient='records'))
+
+@aggregation_bp.route('/aggregate', methods=['POST'])
+def aggregate_dynamic():
+    payload = request.get_json()
+
+    filters   = payload.get("filters", {})
+    group_by  = payload.get("group_by", [])
+    drill_by  = payload.get("drill_by", [])
+    metrics   = payload.get("metrics", ["mishap_count"])
+    n_quarters = payload.get("n_quarters", 8)
+
+    df_features = DataContext.features()
+
+    result_df = get_dynamic_aggregation(
+         df_features=df_features,
+         filters=filters,
+         n_quarters=n_quarters,
+         group_by=group_by,
+         drill_by=drill_by,
+         metrics=metrics
+      )
+
+    return jsonify(result_df.to_dict(orient="records"))
