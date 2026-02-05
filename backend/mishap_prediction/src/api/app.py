@@ -30,6 +30,8 @@ def predict():
      entity_type = data.get('entity_type')
      entity_value = data.get('entity_value')
      n_quarters = int(data.get('n_quarters', 4))
+     w_rf = float(data.get('w_rf', 0.3))
+     w_gb = float(data.get('w_gb', 0.7))
 
      if not entity_type or not entity_value:
           return jsonify({"error": "entity_type and entity_value are required"}), 400
@@ -39,7 +41,9 @@ def predict():
                                         df_features=DataContext.features(),
                                         entity_type=entity_type,
                                         entity_value=entity_value,
-                                        n_quarters=n_quarters
+                                        n_quarters=n_quarters,
+                                        w_rf=w_rf,
+                                        w_gb=w_gb
                                    )
 
           return jsonify({

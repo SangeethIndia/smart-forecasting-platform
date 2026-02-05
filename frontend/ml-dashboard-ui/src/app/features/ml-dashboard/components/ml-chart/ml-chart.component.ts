@@ -11,6 +11,7 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
 
   @Input() data: any[] = [];
   @Input() mode: 'year' | 'quarter' | 'classification' = 'year';
+  @Input() isDrill = false;
   @Output() drill = new EventEmitter<{ entity: string; year?: number; quarter?: number; label?: string }>();
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   chart!: Chart;
@@ -188,7 +189,7 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
       });
 
       const color = colorMap[entity] ?? `hsl(${Math.abs(entity.length * 37) % 360} 70% 45%)`;
-      if (this.mode === 'classification') {
+      if (this.mode === 'classification' && this.isDrill) {
         return {
           label: `${entity}`,
           data: dataArr,
@@ -223,7 +224,7 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
   const maxXTicks = Math.min(12, labels.length || 12);
 
     // Create new chart
-    const chartType = (this.mode === 'classification') ? 'bar' : 'line';
+  const chartType = (this.mode === 'classification' && this.isDrill) ? 'bar' : 'line';
 
     this.chart = new Chart(this.canvas.nativeElement, {
       type: chartType as any,

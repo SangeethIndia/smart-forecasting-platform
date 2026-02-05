@@ -5,7 +5,7 @@ from src.services.combine_actual_predicted import combine_actual_predicted
 from src.services.aggregation_service import aggregate_volume_by_quarter, aggregate_volume_by_year
 from src.utils.helpers import aggregate_data, aggregate_dynamic, apply_entity_column_filters, apply_entity_filters, apply_filters, build_group_cols, reshape_entities
 
-def get_yearwise_trend(df_features, filters, n_quarters):
+def get_yearwise_trend(df_features, filters, n_quarters, w_rf, w_gb):
      actual_df = apply_entity_filters(df_features, filters)[['year', 'quarter', 'entity_type', 'entity_value', 'mishap_count']]
      combined_df = pd.DataFrame()
 
@@ -15,7 +15,9 @@ def get_yearwise_trend(df_features, filters, n_quarters):
                     df_features=df_features,
                     entity_type=etype,
                     entity_value=val,
-                    n_quarters=n_quarters)
+                    n_quarters=n_quarters,
+                    w_rf=w_rf,
+                    w_gb=w_gb)
                
                combined_df = pd.concat(
                                    [combined_df, combine_actual_predicted(actual_df, predicted_df)],ignore_index=True
@@ -26,7 +28,7 @@ def get_yearwise_trend(df_features, filters, n_quarters):
 
      return yearly_trend
 
-def get_quarterly_prediction(df_features, filters, n_quarters):
+def get_quarterly_prediction(df_features, filters, n_quarters, w_rf, w_gb):
      actual_df = apply_entity_filters(df_features, filters)[['year', 'quarter', 'entity_type', 'entity_value', 'mishap_count']]
      combined_df = pd.DataFrame()
      
@@ -36,7 +38,9 @@ def get_quarterly_prediction(df_features, filters, n_quarters):
                     df_features=df_features,
                     entity_type=etype,
                     entity_value=val,
-                    n_quarters=n_quarters)
+                    n_quarters=n_quarters,
+                    w_rf=w_rf, 
+                    w_gb=w_gb)
                
                combined_df = pd.concat(
                                    [combined_df, combine_actual_predicted(actual_df, predicted_df)],ignore_index=True
@@ -83,7 +87,9 @@ def get_dynamic_aggregation(
     group_by,
     drill_by,
     metrics,
-    n_quarters=8
+    n_quarters=8,
+    w_rf=0.3,
+    w_gb=0.7
 ):
     raw_df = df_features.copy()
     combined_df = pd.DataFrame()
@@ -103,7 +109,9 @@ def get_dynamic_aggregation(
                 df_features=raw_df,
                 entity_type=etype,
                 entity_value=val,
-                n_quarters=n_quarters
+                n_quarters=n_quarters,
+                w_rf=w_rf,
+                w_gb=w_gb
             )
 
             combined_df = pd.concat(

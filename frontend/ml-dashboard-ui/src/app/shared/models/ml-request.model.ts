@@ -12,4 +12,9 @@ export interface MishapPredictionRequest {
   // optional range override - backend may accept these to limit the time window
   start_year?: number
   end_year?: number
+  // model ensemble weights: random-forest and gradient-boosting. Values
+  // should sum to 1.0. Back-end expects w_rf and w_gb on prediction and
+  // aggregate endpoints.
+  w_rf?: number
+  w_gb?: number
 }
