@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { MlChartComponent } from "../components/ml-chart/ml-chart.component";
@@ -23,7 +23,7 @@ export class MlDashboardPage {
   // UI-driven selections
   // 'year' | 'quarter' | 'classification'
   trendMode: 'year' | 'quarter' | 'classification' = 'year';
-  // mode currently displayed in the chart. Only updated when user clicks Apply
+  // mode currently displayed in the chart. Kept in sync with selections (auto-run)
   chartModeActive: 'year' | 'quarter' | 'classification' = 'year';
   // default quarters to request when quarterly/seasonal view is chosen
   n_quarters = 8;
@@ -31,10 +31,18 @@ export class MlDashboardPage {
   modelChoice: 'rf' | 'gb' | 'weighted' = 'rf';
   w_rf = 1.0;
   w_gb = 0.0;
+  // slider backing value (0-100) to make the range input easier to bind
+  w_rf_percent = 100;
   // whether the current displayed chart is a drill result
   isDrillActive = false;
 
   constructor(public facade: MlDashboardFacade) {}
+
+  ngOnInit(): void {
+    // Load the first chart automatically on component init
+    // This will show the loader/placeholder while the first request runs
+    this.applyFilters();
+  }
 
   // breadcrumb stack for drill navigation. Each entry stores the label shown
   // and a snapshot of the previous result so Back can restore it.
@@ -98,7 +106,7 @@ export class MlDashboardPage {
   // Build MishapPredictionRequest with keyed filters object and invoke facade
   // Group only by Aviation and Ground and always use Source = Mishap Report
   applyFilters() {
-    // set displayed mode only when user clicks Apply
+  // set displayed mode to current trend selection
     this.chartModeActive = this.trendMode;
     // any top-level apply resets drill state
     this.isDrillActive = false;
@@ -149,10 +157,10 @@ export class MlDashboardPage {
   }
 
   onTrendModeChange() {
-    // Clear current result so the chart area hides until user clicks Apply
-    try {
-      this.facade.result$.next(null);
-    } catch (e) {}
+    // Clear current result so the chart area hides while we load new data
+    try { this.facade.result$.next(null); } catch (e) {}
+    // auto-run for the newly selected trendMode
+    this.applyFilters();
   }
 
   onModelChoiceChange(choice: 'rf' | 'gb' | 'weighted') {
@@ -170,6 +178,10 @@ export class MlDashboardPage {
         this.w_gb = 0.5;
       }
     }
+    // keep slider in sync
+    this.w_rf_percent = Math.round((this.w_rf || 0) * 100);
+    // auto-run whenever model selection changes
+    this.applyFilters();
   }
 
   onWeightsChange(changed: 'rf' | 'gb') {
@@ -183,5 +195,15 @@ export class MlDashboardPage {
     } else {
       this.w_rf = Number((1 - this.w_gb).toFixed(2));
     }
+    this.w_rf_percent = Math.round(this.w_rf * 100);
+    // run prediction with new weights
+    this.applyFilters();
+  }
+
+  onSliderChange() {
+    // w_rf_percent is 0-100; compute w_rf and w_gb and apply
+    this.w_rf = Number(((this.w_rf_percent || 0) / 100).toFixed(2));
+    this.w_gb = Number((1 - this.w_rf).toFixed(2));
+    this.applyFilters();
   }
 }

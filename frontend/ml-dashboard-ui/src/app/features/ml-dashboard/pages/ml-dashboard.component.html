@@ -1,31 +1,33 @@
 <div class="dashboard-container">
   <h1 class="dashboard-title">MISHAP PREDICTIONS</h1>
-  <br/>
-  <!-- Model selection: RF / GB / Weighted -->
-  <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
-    <label style="display:flex;align-items:center;gap:8px;">
+  <p class="dashboard-desc">Forecast future mishap volumes based on historical trends to support planning and risk mitigation.</p>
+
+  <!-- Prediction Method label -->
+  <div class="prediction-method">Prediction Method</div>
+  <!-- Model selection: Standard / Advanced / Balanced -->
+  <div style="display:flex;gap:12px;align-items:center;margin:8px 0 14px 0;flex-wrap:wrap;">
+    <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
       <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('rf')" value="rf" />
-      Use Random Forest
+      <span style="font-weight:600;color:#0b57d0;">Standard Prediction</span>
+      <span class="info-icon" title="Uses Random Forest Model for predicting the future values" style="margin-left:6px;cursor:help;">ℹ️</span>
     </label>
-    <label style="display:flex;align-items:center;gap:8px;">
+    <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
       <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('gb')" value="gb" />
-      Use Gradient Boosting
+      <span style="font-weight:600;color:#0b57d0;">Advanced Prediction</span>
+      <span class="info-icon" title="Uses Gradient Boosting Model for predicting the future values" style="margin-left:6px;cursor:help;">ℹ️</span>
     </label>
-    <label style="display:flex;align-items:center;gap:8px;">
+    <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
       <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('weighted')" value="weighted" />
-      Use weighted average of both
+      <span style="font-weight:600;color:#0b57d0;">Balanced</span>
+      <span class="info-icon" title="Combines multiple Models for stability - Use the slider icon to adjust weightages" style="margin-left:6px;cursor:help;">ℹ️</span>
     </label>
-    <!-- weighted inputs shown only when weighted is chosen -->
-    <div *ngIf="modelChoice === 'weighted'" style="display:flex;gap:8px;align-items:center;margin-left:8px;">
-      <label style="display:flex;flex-direction:column;font-size:12px;">
-        w_rf
-        <input type="number" step="0.01" min="0" max="1" [(ngModel)]="w_rf" (ngModelChange)="onWeightsChange('rf')" style="width:80px;" />
-      </label>
-      <label style="display:flex;flex-direction:column;font-size:12px;">
-        w_gb
-        <input type="number" step="0.01" min="0" max="1" [(ngModel)]="w_gb" (ngModelChange)="onWeightsChange('gb')" style="width:80px;" />
-      </label>
-      <div style="font-size:12px;color:#888;">Sum: {{ (w_rf + w_gb) | number:'1.2-2' }}</div>
+    <!-- weighted slider shown only when Balanced is chosen -->
+    <div *ngIf="modelChoice === 'weighted'" style="display:flex;align-items:center;gap:12px;margin-left:8px;">
+      <div style="display:flex;flex-direction:column;font-size:12px;">
+        <div style="font-weight:600;margin-bottom:4px;">RF weight: {{ (w_rf * 100) | number:'1.0-0' }}%</div>
+        <input type="range" min="0" max="100" step="1" [(ngModel)]="w_rf_percent" (change)="onSliderChange()" style="width:220px;" />
+      </div>
+      <div style="font-size:12px;color:#666;">GB weight: {{ ((1 - w_rf) * 100) | number:'1.0-0' }}%</div>
     </div>
   </div>
   <!-- Second-level trend selection -->
@@ -44,13 +46,7 @@
     </label>
   </div>
 
-  <!-- Apply button to construct UI-driven payload and trigger prediction -->
-  <div style="margin-top:12px;">
-    <button class="primary" (click)="applyFilters()" 
-      style="background:#0d6efd;color:#fff;padding:12px 22px;border-radius:8px;border:none;font-weight:700;box-shadow:0 4px 12px rgba(13,110,253,0.3);font-size:16px;">
-      Apply
-    </button>
-  </div>
+  <!-- Auto-run enabled: selections trigger predictions; Apply button removed -->
 
   <!-- Chart-only results -->
   <div class="results">
