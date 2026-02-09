@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { MlChartComponent } from "../components/ml-chart/ml-chart.component";
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 // MlFormComponent intentionally removed (top panel) per UI change
 import { MlDashboardFacade } from "../services/ml-dashboard.facade";
 import { MishapPredictionRequest } from "../../../shared/models/ml-request.model";
@@ -13,7 +15,9 @@ import { HttpClient } from "@angular/common/http";
   imports: [
     CommonModule,
     FormsModule,
-    MlChartComponent
+    MlChartComponent,
+    MatIconModule,
+    MatTooltipModule
 ],
   providers: [MlDashboardFacade, HttpClient],
   styleUrls: ['./ml-dashboard.component.scss'],
@@ -35,6 +39,23 @@ export class MlDashboardPage {
   w_rf_percent = 100;
   // whether the current displayed chart is a drill result
   isDrillActive = false;
+
+  // Tooltip strings (use TS string literals so newlines are preserved when
+  // passed to matTooltip via property binding)
+  classificationTooltip = `Shows the trend in the mishap count changes grouped by Categories.
+\u00A0A - Total Damage >= $2,500,000 and/or fatality and/or permenant disability
+\u00A0B - Total Damage >= $600,000 and/or injury / operational illness and/or partial disability
+\u00A0C - Total Damage >= $60,000 and/or non fatal injury and/or occupational illness
+\u00A0D - Total Damage >= $25,000 and/or medical treatment greater than first aid
+\u00A0E - Total Damage < $25,000 or injury first aid or less.`;
+
+  // HTML version used for the custom popover (includes <br/> and NBSP for indent)
+  classificationTooltipHtml = `Shows the trend in the mishap count changes grouped by Categories.<br/>
+&nbsp;A - Total Damage &gt;= $2,500,000 and/or fatality and/or permenant disability<br/>
+&nbsp;B - Total Damage &gt;= $600,000 and/or injury / operational illness and/or partial disability<br/>
+&nbsp;C - Total Damage &gt;= $60,000 and/or non fatal injury and/or occupational illness<br/>
+&nbsp;D - Total Damage &gt;= $25,000 and/or medical treatment greater than first aid<br/>
+&nbsp;E - Total Damage &lt; $25,000 or injury first aid or less.`;
 
   constructor(public facade: MlDashboardFacade) {}
 
@@ -71,6 +92,10 @@ export class MlDashboardPage {
       payload.start_year = evt.year;
       payload.end_year = evt.year;
     }
+
+    // include selection context required by backend for drill queries
+    payload.current_selection = 'MishapType';
+    if (evt.year) payload.selected_year = evt.year;
 
     // set chart into classification mode and request aggregated data
     this.chartModeActive = 'classification';

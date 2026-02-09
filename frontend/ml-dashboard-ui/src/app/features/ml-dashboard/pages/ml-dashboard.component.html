@@ -5,21 +5,21 @@
   <!-- Prediction Method label -->
   <div class="prediction-method">Prediction Method</div>
   <!-- Model selection: Standard / Advanced / Balanced -->
-  <div style="display:flex;gap:12px;align-items:center;margin:8px 0 14px 0;flex-wrap:wrap;">
+  <div class="model-choices" style="display:flex;gap:12px;align-items:center;margin:8px 0 14px 0;flex-wrap:wrap;">
     <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
       <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('rf')" value="rf" />
       <span style="font-weight:600;color:#0b57d0;">Standard Prediction</span>
-      <span class="info-icon" title="Uses Random Forest Model for predicting the future values" style="margin-left:6px;cursor:help;">ℹ️</span>
+  <mat-icon class="info-icon" matTooltip="Uses Random Forest Model for predicting the future values" aria-label="Random Forest info">info</mat-icon>
     </label>
     <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
       <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('gb')" value="gb" />
       <span style="font-weight:600;color:#0b57d0;">Advanced Prediction</span>
-      <span class="info-icon" title="Uses Gradient Boosting Model for predicting the future values" style="margin-left:6px;cursor:help;">ℹ️</span>
+  <mat-icon class="info-icon" matTooltip="Uses Gradient Boosting Model for predicting the future values" aria-label="Gradient Boosting info">info</mat-icon>
     </label>
     <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
       <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('weighted')" value="weighted" />
       <span style="font-weight:600;color:#0b57d0;">Balanced</span>
-      <span class="info-icon" title="Combines multiple Models for stability - Use the slider icon to adjust weightages" style="margin-left:6px;cursor:help;">ℹ️</span>
+  <mat-icon class="info-icon" matTooltip="Combines multiple Models for stability - Use the slider icon to adjust weightages" aria-label="Weighted models info">info</mat-icon>
     </label>
     <!-- weighted slider shown only when Balanced is chosen -->
     <div *ngIf="modelChoice === 'weighted'" style="display:flex;align-items:center;gap:12px;margin-left:8px;">
@@ -35,14 +35,20 @@
     <label class="toggle-pill" [class.active]="trendMode === 'year'">
       <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="year" hidden />
       Mishap Trend by Year
+  <mat-icon class="info-icon" matTooltip="Shows the trend in the mishap count changes based on historical data. Covers both 'Aviation' type and 'Ground' type data. Dotted lines denote predictions and Solid lines denote historical data" aria-label="Year trend info">info</mat-icon>
     </label>
     <label class="toggle-pill" [class.active]="trendMode === 'quarter'">
       <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="quarter" hidden />
-      Mishap Volume by Quarters (Quarters of the Year / Seasonal)
+      Quarterly Mishap Prediction – 2026
+  <mat-icon class="info-icon" matTooltip="AI-generated prediction - Number of mishaps in each quarter of 2026." aria-label="Quarterly prediction info">info</mat-icon>
     </label>
     <label class="toggle-pill" [class.active]="trendMode === 'classification'">
       <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="classification" hidden />
-      Mishap Trend - Volume / Classification
+      Mishap Trend by Classification
+  <span class="info-popover">
+    <mat-icon class="info-icon" aria-label="Classification info">info</mat-icon>
+    <div class="popover-content" [innerHTML]="classificationTooltipHtml"></div>
+  </span>
     </label>
   </div>
 

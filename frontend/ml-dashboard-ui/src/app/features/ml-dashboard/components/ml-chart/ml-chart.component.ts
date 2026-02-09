@@ -88,9 +88,10 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
       return Number(aQ) - Number(bQ);
     }).map(k => labelMap.get(k) as string);
 
-    // Group data by entity_value only (ignore data_type) so actual and predicted
-    // points for the same entity render as a single continuous series.
-    const groups = new Map<string, any[]>();
+  // Group data by entity_value + data_type so we can style actual vs predicted
+  // as separate series (solid vs dotted). For classification drill (bars)
+  // we keep the previous behavior (one series per classification value).
+  const groups = new Map<string, any[]>();
     const now = new Date();
 
     // Current year (e.g. 2026)
@@ -116,8 +117,11 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
           return;
         }
       }
-      const entity = d?.entity_value ?? 'unknown';
-      const key = `${entity}`;
+  const entity = d?.entity_value ?? 'unknown';
+  const dtype = d?.data_type ?? 'actual';
+  // Key by entity and data_type for line charts so we can render solid
+  // lines for actual and dotted lines for predicted.
+  const key = `${entity}::${dtype}`;
       // Keep only row-level entities (e.g. 'Aviation', 'Ground').
       // Exclude rows that have container/source labels like 'Mishap Report' or
       // 'Near Miss' which are not entity values to be plotted.
@@ -149,7 +153,11 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
     }
     
 
-  const datasets = Array.from(groups.entries()).map(([entity, items]) => {
+  const datasets = Array.from(groups.entries()).map(([key, items]) => {
+    // key is either "Entity::data_type" for lines or just entity for bars
+    const parts = (key || '').split('::');
+    const entity = parts[0];
+    const dtype = parts[1] || 'actual';
       // build a map of label->value for this group. If both 'actual' and
       // 'predicted' entries exist for the same label, prefer the actual value.
       const valueMap = new Map<string, { value: number; hasActual: boolean }>();
@@ -199,14 +207,15 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
           stack: 'stack1'
         } as any;
       }
+      // For line charts, render actual as solid and predicted as dotted.
       return {
-        label: `${entity}`,
+        label: `${entity} (${dtype})`,
         data: dataArr,
         fill: false,
         borderColor: color,
-        borderWidth: 3,
-        borderDash: [],
-        pointRadius: 4,
+        borderWidth: dtype === 'actual' ? 2 : 2,
+        borderDash: dtype === 'actual' ? [] : [6, 6],
+        pointRadius: 3,
         pointBackgroundColor: color,
         tension: 0.2
       } as any;
@@ -226,7 +235,7 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
     // Create new chart
   const chartType = (this.mode === 'classification' && this.isDrill) ? 'bar' : 'line';
 
-    this.chart = new Chart(this.canvas.nativeElement, {
+  this.chart = new Chart(this.canvas.nativeElement, {
       type: chartType as any,
       data: {
         labels,
@@ -240,7 +249,7 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
         },
         plugins: {
           // show legend positioned to the right (beside Y axis) per request
-          legend: { display: true, position: 'right' }
+          legend: { display: true, position: 'right', labels: { font: { size: 12 } } }
         },
         scales: {
           x: {
@@ -285,8 +294,12 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
             const m = (label || '').toString().match(/^(\d{4})(?:-Q(\d))?$/);
             const year = m ? Number(m[1]) : undefined;
             const quarter = m && m[2] ? Number(m[2]) : undefined;
-            const entity = ds && ds.label ? ds.label.toString() : undefined;
-            if (entity) this.drill.emit({ entity, year, quarter, label });
+            let entity = ds && ds.label ? ds.label.toString() : undefined;
+            if (entity) {
+              // strip any " (predicted)" suffix added to legend labels
+              entity = entity.replace(/\s*\(.*\)$/, '');
+              this.drill.emit({ entity, year, quarter, label });
+            }
           } catch (e) {
             // swallow errors to avoid breaking chart interactions
           }
