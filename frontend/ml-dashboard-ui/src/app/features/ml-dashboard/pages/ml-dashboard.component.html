@@ -35,7 +35,7 @@
     <label class="toggle-pill" [class.active]="trendMode === 'year'">
       <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="year" hidden />
       Mishap Trend by Year
-  <mat-icon class="info-icon" matTooltip="Shows the trend in the mishap count changes based on historical data. Covers both 'Aviation' type and 'Ground' type data. Dotted lines denote predictions and Solid lines denote historical data" aria-label="Year trend info">info</mat-icon>
+  <mat-icon class="info-icon" matTooltip="Click any data point to view classification breakdown." aria-label="Year trend info">info</mat-icon>
     </label>
     <label class="toggle-pill" [class.active]="trendMode === 'quarter'">
       <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="quarter" hidden />
@@ -66,18 +66,17 @@
       </ng-container>
       <ng-template #showChart>
         <ng-container *ngIf="facade.result$ | async as result">
-          <!-- Breadcrumbs / Back for drill-down -->
-          <div *ngIf="breadcrumbs.length" style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-            <button class="secondary" (click)="onBack()" style="padding:6px 12px;border-radius:6px;border:1px solid #ddd;background:#fff;">Back</button>
-            <div style="font-size:14px;color:#444;display:flex;gap:6px;align-items:center;">
-              <ng-container *ngFor="let b of breadcrumbs; let i = index">
-                <span style="font-weight:600">{{b.label}}</span>
-                <span *ngIf="i < (breadcrumbs.length - 1)" style="opacity:0.6">/</span>
-              </ng-container>
+          <!-- Show summary insight when backend returns it -->
+          <div *ngIf="result?.summary_insight" class="key-insight" style="margin-bottom:12px;display:flex;align-items:flex-start;gap:6px;">
+            <mat-icon class="insight-icon" aria-hidden="true" style="color:#f59e0b;">insights</mat-icon>
+            <div>
+              <div style="font-weight:700;color:#1f2937;margin-bottom:4px;">Key Insights</div>
+              <div style="color:#374151;max-width:900px;">{{ result.summary_insight }}</div>
             </div>
           </div>
+          <!-- Breadcrumbs/back removed per UX request -->
 
-          <app-ml-chart [data]="result.predictions" [mode]="chartModeActive" [isDrill]="isDrillActive"></app-ml-chart>
+          <app-ml-chart [data]="result.predictions" [mode]="chartModeActive" [isDrill]="isDrillActive" (drill)="onDrill($event)"></app-ml-chart>
         </ng-container>
       </ng-template>
     </div>

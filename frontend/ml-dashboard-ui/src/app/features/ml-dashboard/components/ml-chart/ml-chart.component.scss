@@ -3,14 +3,56 @@
      width: 100%;
 }
 
-.chart-canvas {
-     width: 100% !important;
-     height: 100% !important;
-     /* fill the chart-panel height */
-     min-height: 520px !important;
-     /* ensure reasonable canvas height */
-     display: block;
+.chart-wrapper {
+     position: relative;
+     width: 100%;
 }
+
+.chart-canvas {
+           width: 100% !important;
+           height: 100% !important;
+           /* fill the chart-panel height */
+           min-height: 520px !important;
+           /* ensure reasonable canvas height */
+           display: block;
+}
+
+.chart-info-btn {
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     height: 34px;
+     width: 34px;
+     border-radius: 6px;
+     border: 1px solid rgba(11,87,208,0.12);
+     background: #fff;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     cursor: pointer;
+     padding: 0;
+}
+
+.chart-info-popover {
+     position: absolute;
+     top: 48px;
+     right: 8px;
+     z-index: 30;
+     min-width: 220px;
+     max-width: 320px;
+     background: #fff;
+     border: 1px solid rgba(0,0,0,0.06);
+     border-radius: 6px;
+     box-shadow: 0 6px 18px rgba(16,24,40,0.08);
+     padding: 10px 12px;
+     color: #111827;
+}
+
+/* ensure the info button and popover sit above the canvas */
+.chart-info-btn, .chart-info-popover { z-index: 60; }
+
+.popover-title { font-weight: 700; margin-bottom: 6px; font-size: 13px; }
+.popover-body { font-size: 13px; color: #374151; }
 
 @media (max-width: 600px) {
      .chart-canvas {

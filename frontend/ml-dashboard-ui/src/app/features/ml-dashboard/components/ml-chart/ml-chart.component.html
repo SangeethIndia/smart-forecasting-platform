@@ -1,1 +1,18 @@
-<canvas #canvas class="chart-canvas"></canvas>
+<div class="chart-wrapper">
+	<!-- top-right info icon -->
+	<button class="chart-info-btn" aria-label="Chart info" (click)="toggleInfo($event)">
+		<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+			<circle cx="12" cy="12" r="10" fill="#e6eefc" stroke="#0b57d0" stroke-width="1" />
+			<path d="M11 11h2v6h-2v-6zm0-4h2v2h-2V7z" fill="#0b57d0" />
+		</svg>
+	</button>
+	<div *ngIf="mode === 'year' || mode === 'classification'"  class="chart-info-popover" (click)="$event.stopPropagation()" [style.display]="showInfo ? 'block' : 'none'" [attr.aria-hidden]="!showInfo">
+			<div [style.display]="mode === 'classification' ? 'block' : 'none'">
+				<div class="popover-body">Click any data point to view mishap type breakdown.</div>
+			</div>
+			<div [style.display]="mode === 'year' ? 'block' : 'none'">
+				<div class="popover-body">Click any data point to view classification breakdown.</div>
+			</div>
+		</div>
+	<canvas #canvas class="chart-canvas"></canvas>
+</div>

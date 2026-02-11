@@ -1,7 +1,10 @@
 .dashboard-container {
      max-width: 1200px;
-     margin: 28px auto;
-     padding: 20px;
+     margin: 24px auto;
+     padding: 16px;
+          /* stronger reduction so the page breathes at 100% on laptop screens */
+          font-size: 0.90rem;
+          line-height: 1.5;
      background: #fff;
      border: 1px solid rgba(0, 0, 0, 0.06);
      border-radius: 10px;
@@ -10,17 +13,17 @@
 
 .filters {
      display: flex;
-     gap: 16px;
+     gap: 24px;
      align-items: flex-end;
      flex-wrap: wrap;
 }
 
 .results {
-     margin-top: 12px;
+     margin-top: 18px;
      display: flex;
      flex-direction: column;
      /* stack vertically to avoid overflow */
-     gap: 12px;
+     gap: 20px;
      align-items: stretch;
 }
 
@@ -30,7 +33,7 @@
      /* reduced height to fit laptop screens better */
      background: linear-gradient(180deg, #ffffff, #fbfbfd);
      border-radius: 8px;
-     padding: 12px;
+     padding: 10px;
      box-shadow: 0 4px 12px rgba(14, 30, 37, 0.04);
      display: block;
      border: 1px solid rgba(16, 24, 40, 0.04);
@@ -94,6 +97,7 @@
      position: relative;
      display: inline-block;
 }
+
 .info-popover .popover-content {
      display: none;
      position: absolute;
@@ -114,9 +118,10 @@
      word-wrap: break-word;
      overflow-wrap: anywhere;
      text-align: left;
-     box-shadow: 0 6px 14px rgba(2,6,23,0.45);
+     box-shadow: 0 6px 14px rgba(2, 6, 23, 0.45);
      z-index: 1000;
 }
+
 .info-popover:hover .popover-content,
 .info-popover:focus-within .popover-content {
      display: block;
@@ -150,42 +155,75 @@
 /* Model radio choices container: reduce radio label font size so controls fit
    better on laptop screens */
 .model-choices {
-     /* reduce font size further and add spacing between wrapped rows */
+     /* reduce font size further and increase spacing between wrapped rows */
      display: flex;
      flex-wrap: wrap;
-     gap: 10px 12px;
-     /* row-gap 10px, column-gap 12px */
-     margin-bottom: 14px;
+     gap: 14px 16px;
+     /* row-gap 14px, column-gap 16px */
+     margin-bottom: 20px;
 
      label {
-          font-size: 0.9rem;
-          padding: 6px 8px;
-          margin-bottom: 8px;
+          font-size: 0.88rem;
+          padding: 8px 12px;
+          margin-bottom: 12px;
           /* extra spacing for stacked rows */
      }
 
      /* the visible text spans inside each label */
      label span {
-          font-size: 0.9rem;
+          font-size: 0.88rem;
      }
 }
 
 /* Slightly smaller text for the toggle pills and extra row spacing */
 .toggle-pill {
      font-size: 0.9rem;
-     padding: 6px 12px;
-     margin-bottom: 10px;
+     padding: 10px 16px;
+     margin-bottom: 16px;
 }
 
 /* increase spacing above view-toggle to separate rows visually */
 .view-toggle {
-     margin-top: 18px;
+     margin-top: 22px;
 }
 
 .toggle-pill.active {
      background: linear-gradient(180deg, #eef2ff, #e6f0ff);
      border-color: #c7d2fe;
      color: #1e40af;
+}
+
+.key-insight {
+     background: #fffbeb;
+     border: 1px solid #fef3c7;
+     /* further reduce vertical padding and overall size so the box is compact */
+     padding: 4px 8px;
+     border-radius: 8px;
+}
+
+/* Target the textual parts inside the Key Insight: keep title size, but
+   slightly reduce the body text and vertical spacing so it breathes at 100% */
+.key-insight > div > div:first-child {
+     /* title: slightly smaller and tightened */
+     margin-bottom: 2px;
+     font-size: 0.95rem;
+     font-weight: 700;
+     color: #1f2937;
+}
+
+.key-insight > div > div:last-child {
+     color: #374151;
+     max-width: 900px;
+     /* make the insight body much smaller as requested */
+     font-size: 0.80rem;
+     line-height: 1.35;
+}
+
+.insight-icon {
+     font-size: 16px;
+     margin-top: 0px;
+     /* move the icon slightly closer to the title text */
+     margin-right: 6px;
 }
 
 @media (max-width: 900px) {

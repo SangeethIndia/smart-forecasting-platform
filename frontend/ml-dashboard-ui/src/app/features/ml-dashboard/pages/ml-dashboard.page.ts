@@ -65,63 +65,52 @@ export class MlDashboardPage {
     this.applyFilters();
   }
 
-  // breadcrumb stack for drill navigation. Each entry stores the label shown
-  // and a snapshot of the previous result so Back can restore it.
-  breadcrumbs: Array<{ label: string; previousMode: string; previousResult: any }> = [];
-
   onDrill(evt: { entity: string; year?: number; quarter?: number; label?: string }) {
     if (!evt || !evt.entity) return;
-
-    // snapshot current result so we can go back
-    const current = this.facade.result$.getValue();
-    this.breadcrumbs.push({ label: `${evt.entity}${evt.year ? ' - ' + evt.year : ''}`, previousMode: this.chartModeActive, previousResult: current });
-
-    // build aggregate payload matching backend examples
-    const filters: any[] = [
-      { entity_type: 'MishapType', entity_value: [evt.entity] },
-      { entity_type: 'Source', entity_value: ['Mishap Report'] }
-    ];
-
+    // Build aggregate payload depending on which chart was clicked.
+    // If the current chart is classification, the user clicked a
+    // classification bucket (A/B/C...) and wants to see MishapType
+    // breakdown (Aviation/Ground). Otherwise, they clicked a
+    // MishapType (Aviation/Ground) and want classification breakdown.
     const payload: any = {
-      filters,
-      group_by: ['year', 'mishapclassification'],
+      filters: {},
+      group_by: [],
       metrics: ['mishap_count']
     };
+
+    if (this.chartModeActive === 'classification') {
+      // clicked on classification bucket -> show MishapType breakdown
+      payload.filters = {
+        MishapClassification: [evt.entity],
+        Source: ['Mishap Report']
+      };
+      payload.group_by = ['year', 'mishaptype'];
+      payload.current_selection = 'MishapClassification';
+    } else {
+      // clicked on MishapType (Aviation/Ground) -> show classification breakdown
+      payload.filters = {
+        MishapType: [evt.entity],
+        Source: ['Mishap Report']
+      };
+      payload.group_by = ['year', 'mishapclassification'];
+      payload.current_selection = 'MishapType';
+    }
 
     if (evt.year) {
       payload.start_year = evt.year;
       payload.end_year = evt.year;
+      payload.selected_year = evt.year;
     }
 
-    // include selection context required by backend for drill queries
-    payload.current_selection = 'MishapType';
-    if (evt.year) payload.selected_year = evt.year;
-
-    // set chart into classification mode and request aggregated data
+    // switch chart into classification mode to render grouped bars
     this.chartModeActive = 'classification';
-    // mark this view as a drill so the chart can render bars/stacked bars
     this.isDrillActive = true;
-    // include current model weights in aggregate payload
     payload.w_rf = this.w_rf;
     payload.w_gb = this.w_gb;
+    console.debug('[ml-dashboard] drill payload', payload);
     this.facade.runAggregate(payload);
   }
 
-  onBack() {
-    if (!this.breadcrumbs.length) return;
-    const last = this.breadcrumbs.pop();
-    if (last) {
-      this.chartModeActive = (last.previousMode as any) || 'year';
-      // restore the previous result snapshot if available
-      try {
-        this.facade.result$.next(last.previousResult);
-        this.isDrillActive = false;
-      } catch (e) {
-        // if restoring fails, clear the view
-        this.facade.result$.next(null);
-      }
-    }
-  }
 
   // Keep existing form hook for compatibility with the embedded form component
   onSubmit(payload: MishapPredictionRequest) {
@@ -157,7 +146,7 @@ export class MlDashboardPage {
           MishapType: ['Aviation', 'Ground'],
           Source: ['Mishap Report']
         },
-        n_quarters: 4,
+        n_quarters: 8,
         start_year: 2026,
         end_year: 2027
       };

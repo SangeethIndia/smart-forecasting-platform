@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from "@angular/core";
 import { Chart, registerables } from 'chart.js';
+import { CommonModule } from "@angular/common";
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-ml-chart',
   templateUrl: './ml-chart.component.html',
-  styleUrls: ['./ml-chart.component.scss']
+  styleUrls: ['./ml-chart.component.scss'],
+  imports: [CommonModule]
 })
 export class MlChartComponent implements AfterViewInit, OnChanges {
 
@@ -15,6 +17,7 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
   @Output() drill = new EventEmitter<{ entity: string; year?: number; quarter?: number; label?: string }>();
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   chart!: Chart;
+  showInfo = false;
 
   ngAfterViewInit() {
     // If data already present when view initializes, render immediately
@@ -41,6 +44,7 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
 
   render() {
     if (!this.data?.length || !this.canvas) return;
+    console.debug('[ml-chart] render called, data length', this.data ? this.data.length : 0);
 
     // enforce a reasonable canvas height so Chart.js renders at expected size
     try {
@@ -90,7 +94,7 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
 
   // Group data by entity_value + data_type so we can style actual vs predicted
   // as separate series (solid vs dotted). For classification drill (bars)
-  // we keep the previous behavior (one series per classification value).
+    // we keep the previous behavior (one series per classification value).
   const groups = new Map<string, any[]>();
     const now = new Date();
 
@@ -109,10 +113,13 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
         const y = d?.year;
         const q = d?.quarter;
 
-        // allow only future quarters
+        // allow only future quarters (include the current quarter as it may
+        // contain predicted values for the in-progress quarter). Previously
+        // this used `q <= currentQuarter` which filtered out rows for the
+        // current quarter; change to strictly less-than to keep current Q.
         if (
           y < currentYear ||
-          (y === currentYear && q <= currentQuarter)
+          (y === currentYear && q < currentQuarter)
         ) {
           return;
         }
@@ -122,16 +129,20 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
   // Key by entity and data_type for line charts so we can render solid
   // lines for actual and dotted lines for predicted.
   const key = `${entity}::${dtype}`;
-      // Keep only row-level entities (e.g. 'Aviation', 'Ground').
-      // Exclude rows that have container/source labels like 'Mishap Report' or
-      // 'Near Miss' which are not entity values to be plotted.
-      // NOTE: DO NOT REMOVE the condition below – it's intentionally filtering
-      // out non-entity rows that would otherwise show up as series.
-      if (d?.entity_value != 'Mishap Report' && d?.entity_value != 'Near Miss') {
+      // Keep only row-level entities (e.g. 'Aviation', 'Ground', 'A','B'..).
+      // Exclude rows that have container/source labels like 'Mishap Report'
+      // which are not entity values to be plotted.
+      if (d?.entity_value && d?.entity_value !== 'Mishap Report' && d?.entity_value !== 'Near Miss') {
         if (!groups.has(key)) groups.set(key, []);
         groups.get(key)!.push(d);
       }
     });
+
+    // DEBUG: dump raw input and grouping info to help diagnose plotting vs tooltip
+    try {
+      // keep concise but informative
+      console.debug('[ml-chart] raw data sample', (this.data || []).slice(0, 8));
+    } catch (e) {}
 
     // color mapping for known entities
     let colorMap: Record<string, string>;
@@ -187,7 +198,8 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
 
       // align data with labels array
       const dataArr = labels.map(lbl => {
-        const m = lbl.match(/^(\d{4}) Q(\d)$/);
+        // accept either '2026-Q1' or '2026 Q1' formats
+        const m = lbl.match(/^(\d{4})[- ]Q(\d)$/);
         let k = lbl;
         if (m) k = `${m[1]}-Q${m[2]}`;
         else if (/^\d{4}$/.test(lbl)) k = lbl;
@@ -204,9 +216,13 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
           backgroundColor: color,
           borderColor: color,
           borderWidth: 1,
-          stack: 'stack1'
+          categoryPercentage: 0.6,   // space between groups
+          barPercentage: 0.6,        // thickness inside group
+          maxBarThickness: 35,       // absolute max width
+          borderRadius: 6
         } as any;
       }
+
       // For line charts, render actual as solid and predicted as dotted.
       return {
         label: `${entity} (${dtype})`,
@@ -221,6 +237,12 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
       } as any;
     });
 
+    // DEBUG: log labels and dataset sizes/first-values to help debugging
+    try {
+      console.debug('[ml-chart] labels', labels);
+      console.debug('[ml-chart] datasets summary', datasets.map(ds => ({ label: ds.label, dataPreview: (ds.data || []).slice(0,6) })));
+    } catch (e) {}
+
     // If chart exists, update its data and redraw
     if (this.chart) {
       this.chart.data.labels = labels as any;
@@ -234,14 +256,68 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
 
     // Create new chart
   const chartType = (this.mode === 'classification' && this.isDrill) ? 'bar' : 'line';
+    // Create a small plugin to draw data labels for bar charts (stacked or grouped).
+    const dataLabelPlugin: any = {
+      id: 'mlDataLabels',
+      afterDatasetsDraw: (chartObj: any) => {
+        try {
+          if (chartObj.config.type !== 'bar') return;
+          const isStacked = !!(chartObj.options && chartObj.options.scales && chartObj.options.scales.y && chartObj.options.scales.y.stacked);
+          const ctx = chartObj.ctx;
+          chartObj.data.datasets.forEach((dataset: any, dsIndex: number) => {
+            const meta = chartObj.getDatasetMeta(dsIndex);
+            meta.data.forEach((bar: any, index: number) => {
+              const value = dataset.data && dataset.data[index];
+              if (value == null) return;
+              const top = bar.y;
+              const bottom = bar.base;
+              const x = bar.x || (bar.x === 0 ? 0 : (bar.getCenterPoint ? bar.getCenterPoint().x : 0));
+              let textY = top;
+              if (isStacked) {
+                textY = (top + bottom) / 2;
+              } else {
+                textY = Math.max(8, top - 8);
+              }
+              // choose contrasting text color based on background if available
+              let bg = dataset.backgroundColor || dataset.borderColor || '#000';
+              if (Array.isArray(bg)) bg = bg[index] || bg[0];
+              const hexToRgb = (h: string) => {
+                try {
+                  const m = h.match(/^#?([a-fA-F0-9]{6})$/);
+                  if (!m) return null;
+                  const int = parseInt(m[1], 16);
+                  return { r: (int >> 16) & 255, g: (int >> 8) & 255, b: int & 255 };
+                } catch (e) { return null; }
+              };
+              let textColor = '#111';
+              const rgb = hexToRgb(String(bg));
+              if (rgb) {
+                const lum = 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
+                textColor = lum > 180 ? '#111' : '#fff';
+              }
+              ctx.save();
+              ctx.fillStyle = textColor;
+              ctx.font = '11px system-ui, Arial, sans-serif';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = isStacked ? 'middle' : 'bottom';
+              ctx.fillText(String(value), x, textY);
+              ctx.restore();
+            });
+          });
+        } catch (e) {
+          // swallow - debugging only
+        }
+      }
+    };
 
-  this.chart = new Chart(this.canvas.nativeElement, {
-      type: chartType as any,
-      data: {
-        labels,
-        datasets
-      },
-      options: {
+    this.chart = new Chart(this.canvas.nativeElement, {
+        type: chartType as any,
+        data: {
+          labels,
+          datasets
+        },
+        plugins: [dataLabelPlugin],
+        options: {
         responsive: true,
         maintainAspectRatio: false,
         layout: {
@@ -257,10 +333,12 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
             grid: { display: false },
             title: { display: true, text: (this.mode === 'quarter' ? 'Year + Quarter' : 'Year') },
             ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: maxXTicks },
-            stacked: this.mode === 'classification'
+            stacked: false
           },
           y: {
             display: true,
+            // hide Y-axis tick labels when showing stacked classification drill
+            ticks: { display: !(this.mode === 'classification' && this.isDrill) },
             // show only subtle horizontal lines for major ticks
             grid: {
               color: (ctx: any) => {
@@ -278,13 +356,14 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
               // do not change axis border via Chart.js types (handled by CSS)
             },
             title: { display: true, text: 'Mishap Count' },
-            stacked: this.mode === 'classification'
+            stacked: false
           }
         }
         // Chart click handler for drill-down
       , onClick: (evt: any, elements: any[]) => {
           try {
             if (!elements || !elements.length) return;
+              console.debug('[ml-chart] onClick', { elements, evt });
             const el = elements[0];
             const dsIndex = el.datasetIndex;
             const idx = el.index;
@@ -306,6 +385,11 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
         }
       }
     });
+  }
+
+  toggleInfo(evt: Event) {
+    try { evt.stopPropagation(); } catch (e) {}
+    this.showInfo = !this.showInfo;
   }
 
   private updateChart() {
