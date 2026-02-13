@@ -35,7 +35,7 @@
     <label class="toggle-pill" [class.active]="trendMode === 'year'">
       <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="year" hidden />
       Mishap Trend by Year
-  <mat-icon class="info-icon" matTooltip="Click any data point to view classification breakdown." aria-label="Year trend info">info</mat-icon>
+  <mat-icon class="info-icon" matTooltip="Visualizes year-wise mishap counts to help identify long-term increases, decreases, or spikes." aria-label="Year trend info">info</mat-icon>
     </label>
     <label class="toggle-pill" [class.active]="trendMode === 'quarter'">
       <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="quarter" hidden />
@@ -76,7 +76,7 @@
           </div>
           <!-- Breadcrumbs/back removed per UX request -->
 
-          <app-ml-chart [data]="result.predictions" [mode]="chartModeActive" [isDrill]="isDrillActive" (drill)="onDrill($event)"></app-ml-chart>
+          <app-ml-chart [data]="result.predictions" [mode]="chartModeActive" [isDrill]="isDrillActive"></app-ml-chart>
         </ng-container>
       </ng-template>
     </div>
