@@ -1,81 +1,81 @@
-<div class="dashboard-container">
-  <h1 class="dashboard-title">MISHAP PREDICTIONS</h1>
-  <p class="dashboard-desc">Forecast future mishap volumes based on historical trends to support planning and risk mitigation.</p>
-
-  <!-- Prediction Method label -->
-  <div class="prediction-method">Prediction Method</div>
-  <!-- Model selection: Standard / Advanced / Balanced -->
-  <div class="model-choices" style="display:flex;gap:12px;align-items:center;margin:8px 0 14px 0;flex-wrap:wrap;">
-    <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
-      <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('rf')" value="rf" />
-      <span style="font-weight:600;color:#0b57d0;">Standard Prediction</span>
-  <mat-icon class="info-icon" matTooltip="Uses Random Forest Model for predicting the future values" aria-label="Random Forest info">info</mat-icon>
-    </label>
-    <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
-      <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('gb')" value="gb" />
-      <span style="font-weight:600;color:#0b57d0;">Advanced Prediction</span>
-  <mat-icon class="info-icon" matTooltip="Uses Gradient Boosting Model for predicting the future values" aria-label="Gradient Boosting info">info</mat-icon>
-    </label>
-    <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
-      <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('weighted')" value="weighted" />
-      <span style="font-weight:600;color:#0b57d0;">Balanced</span>
-  <mat-icon class="info-icon" matTooltip="Combines multiple Models for stability - Use the slider icon to adjust weightages" aria-label="Weighted models info">info</mat-icon>
-    </label>
-    <!-- weighted slider shown only when Balanced is chosen -->
-    <div *ngIf="modelChoice === 'weighted'" style="display:flex;align-items:center;gap:12px;margin-left:8px;">
-      <div style="display:flex;flex-direction:column;font-size:12px;">
-        <div style="font-weight:600;margin-bottom:4px;">RF weight: {{ (w_rf * 100) | number:'1.0-0' }}%</div>
-        <input type="range" min="0" max="100" step="1" [(ngModel)]="w_rf_percent" (change)="onSliderChange()" style="width:220px;" />
-      </div>
-      <div style="font-size:12px;color:#666;">GB weight: {{ ((1 - w_rf) * 100) | number:'1.0-0' }}%</div>
-    </div>
+<div class="page-wrapper">
+  <div class="overlay" *ngIf="facade.loading$ | async">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading...</div>
   </div>
-  <!-- Second-level trend selection -->
-  <div class="view-toggle" style="margin-top:12px; display:flex; gap:12px; align-items:center;">
-    <label class="toggle-pill" [class.active]="trendMode === 'year'">
-      <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="year" hidden />
-      Mishap Trend by Year
-  <mat-icon class="info-icon" matTooltip="Visualizes year-wise mishap counts to help identify long-term increases, decreases, or spikes." aria-label="Year trend info">info</mat-icon>
-    </label>
-    <label class="toggle-pill" [class.active]="trendMode === 'quarter'">
-      <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="quarter" hidden />
-      Quarterly Mishap Prediction – 2026
-  <mat-icon class="info-icon" matTooltip="AI-generated prediction - Number of mishaps in each quarter of 2026." aria-label="Quarterly prediction info">info</mat-icon>
-    </label>
-    <label class="toggle-pill" [class.active]="trendMode === 'classification'">
-      <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="classification" hidden />
-      Mishap Trend by Classification
-  <span class="info-popover">
-    <mat-icon class="info-icon" aria-label="Classification info">info</mat-icon>
-    <div class="popover-content" [innerHTML]="classificationTooltipHtml"></div>
-  </span>
-    </label>
-  </div>
+  <div class="dashboard-container">
+    <h1 class="dashboard-title">MISHAP PREDICTIONS</h1>
+    <p class="dashboard-desc">Forecast future mishap volumes based on historical trends to support planning and risk mitigation.</p>
 
-  <!-- Auto-run enabled: selections trigger predictions; Apply button removed -->
-
-  <!-- Chart-only results -->
-  <div class="results">
-    <div class="chart-panel" style="min-height:520px;">
-      <!-- While loading the drill/aggregate call, reserve the chart space to
-           avoid layout shifts. Show a light placeholder. -->
-      <ng-container *ngIf="facade.result$ | async as result">
-        <!-- Show summary insight when backend returns it -->
-        <div *ngIf="result?.summary_insight" class="key-insight" style="margin-bottom:12px;display:flex;align-items:flex-start;gap:6px;">
-          <mat-icon class="insight-icon" aria-hidden="true" style="color:#f59e0b;">insights</mat-icon>
-          <div>
-            <div style="font-weight:700;color:#1f2937;margin-bottom:4px;">Key Insights</div>
-            <div style="color:#374151;max-width:900px;">{{ result.summary_insight }}</div>
-          </div>
+    <!-- Prediction Method label -->
+    <div class="prediction-method">Prediction Method</div>
+    <!-- Model selection: Standard / Advanced / Balanced -->
+    <div class="model-choices" style="display:flex;gap:12px;align-items:center;margin:8px 0 14px 0;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
+        <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('rf')" value="rf" />
+        <span style="font-weight:600;color:#0b57d0;">Standard Prediction</span>
+    <mat-icon class="info-icon" matTooltip="Uses Random Forest Model for predicting the future values" aria-label="Random Forest info">info</mat-icon>
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
+        <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('gb')" value="gb" />
+        <span style="font-weight:600;color:#0b57d0;">Advanced Prediction</span>
+    <mat-icon class="info-icon" matTooltip="Uses Gradient Boosting Model for predicting the future values" aria-label="Gradient Boosting info">info</mat-icon>
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:#f8f9fb;border:1px solid #eef2f6;">
+        <input type="radio" name="modelChoice" [(ngModel)]="modelChoice" (change)="onModelChoiceChange('weighted')" value="weighted" />
+        <span style="font-weight:600;color:#0b57d0;">Balanced</span>
+    <mat-icon class="info-icon" matTooltip="Combines multiple Models for stability - Use the slider icon to adjust weightages" aria-label="Weighted models info">info</mat-icon>
+      </label>
+      <!-- weighted slider shown only when Balanced is chosen -->
+      <div *ngIf="modelChoice === 'weighted'" style="display:flex;align-items:center;gap:12px;margin-left:8px;">
+        <div style="display:flex;flex-direction:column;font-size:12px;">
+          <div style="font-weight:600;margin-bottom:4px;">RF weight: {{ (w_rf * 100) | number:'1.0-0' }}%</div>
+          <input type="range" min="0" max="100" step="1" [(ngModel)]="w_rf_percent" (change)="onSliderChange()" style="width:220px;" />
         </div>
-        <app-ml-chart [data]="result.predictions" [mode]="chartModeActive" [isDrill]="isDrillActive"></app-ml-chart>
-      </ng-container>
+        <div style="font-size:12px;color:#666;">GB weight: {{ ((1 - w_rf) * 100) | number:'1.0-0' }}%</div>
+      </div>
+    </div>
+    <!-- Second-level trend selection -->
+    <div class="view-toggle" style="margin-top:12px; display:flex; gap:12px; align-items:center;">
+      <label class="toggle-pill" [class.active]="trendMode === 'year'">
+        <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="year" hidden />
+        Mishap Trend by Year
+    <mat-icon class="info-icon" matTooltip="Visualizes year-wise mishap counts to help identify long-term increases, decreases, or spikes." aria-label="Year trend info">info</mat-icon>
+      </label>
+      <label class="toggle-pill" [class.active]="trendMode === 'quarter'">
+        <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="quarter" hidden />
+        Quarterly Mishap Prediction – 2026
+    <mat-icon class="info-icon" matTooltip="AI-generated prediction - Number of mishaps in each quarter of 2026." aria-label="Quarterly prediction info">info</mat-icon>
+      </label>
+      <label class="toggle-pill" [class.active]="trendMode === 'classification'">
+        <input type="radio" name="trendMode" [(ngModel)]="trendMode" (ngModelChange)="onTrendModeChange()" value="classification" hidden />
+        Mishap Trend by Classification
+    <span class="info-popover">
+      <mat-icon class="info-icon" aria-label="Classification info">info</mat-icon>
+      <div class="popover-content" [innerHTML]="classificationTooltipHtml"></div>
+    </span>
+      </label>
+    </div>
+
+    <!-- Auto-run enabled: selections trigger predictions; Apply button removed -->
+
+    <!-- Chart-only results -->
+    <div class="results">
+      <div class="chart-panel" style="min-height:520px;">
+        <!-- While loading the drill/aggregate call, reserve the chart space to
+            avoid layout shifts. Show a light placeholder. -->
+        <ng-container *ngIf="facade.result$ | async as result">
+          <!-- Show summary insight when backend returns it -->
+          <div *ngIf="result?.summary_insight" class="key-insight" style="margin-bottom:12px;display:flex;align-items:flex-start;gap:6px;">
+            <mat-icon class="insight-icon" aria-hidden="true" style="color:#f59e0b;">insights</mat-icon>
+            <div>
+              <div style="font-weight:700;color:#1f2937;margin-bottom:4px;">Key Insights</div>
+              <div style="color:#374151;max-width:900px;">{{ result.summary_insight }}</div>
+            </div>
+          </div>
+          <app-ml-chart [data]="result.predictions" [mode]="chartModeActive" [isDrill]="isDrillActive"></app-ml-chart>
+        </ng-container>
+      </div>
     </div>
   </div>
-
-  <div class="global-loader" *ngIf="facade.loading$ | async">
-    <div class="loader-content">
-        Loading details...
-    </div>
-</div>
 </div>
