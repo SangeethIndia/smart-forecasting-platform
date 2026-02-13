@@ -2,13 +2,34 @@
      max-width: 1200px;
      margin: 24px auto;
      padding: 16px;
-          /* stronger reduction so the page breathes at 100% on laptop screens */
-          font-size: 0.90rem;
-          line-height: 1.5;
+     /* stronger reduction so the page breathes at 100% on laptop screens */
+     font-size: 0.90rem;
+     line-height: 1.5;
      background: #fff;
      border: 1px solid rgba(0, 0, 0, 0.06);
      border-radius: 10px;
      box-shadow: 0 6px 18px rgba(31, 45, 61, 0.06);
+}
+
+.global-loader {
+     position: absolute;
+     inset: 0;
+     background: rgba(255, 255, 255, 0.7);
+     backdrop-filter: blur(2px);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     z-index: 1000;
+     pointer-events: all; // blocks clicks
+}
+
+.loader-content {
+     padding: 16px 24px;
+     background: white;
+     border-radius: 8px;
+     font-weight: 600;
+     color: #444;
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .filters {
@@ -203,7 +224,7 @@
 
 /* Target the textual parts inside the Key Insight: keep title size, but
    slightly reduce the body text and vertical spacing so it breathes at 100% */
-.key-insight > div > div:first-child {
+.key-insight>div>div:first-child {
      /* title: slightly smaller and tightened */
      margin-bottom: 2px;
      font-size: 0.95rem;
@@ -211,7 +232,7 @@
      color: #1f2937;
 }
 
-.key-insight > div > div:last-child {
+.key-insight>div>div:last-child {
      color: #374151;
      max-width: 900px;
      /* make the insight body much smaller as requested */

@@ -47,14 +47,14 @@ export class MlChartComponent implements AfterViewInit, OnChanges {
     console.debug('[ml-chart] render called, data length', this.data ? this.data.length : 0);
 
     // enforce a reasonable canvas height so Chart.js renders at expected size
-    try {
-      const el = this.canvas.nativeElement as HTMLCanvasElement;
-      const targetHeight = (window?.innerWidth && window.innerWidth <= 600) ? 360 : 520;
-      el.style.height = targetHeight + 'px';
-      el.height = targetHeight;
-    } catch (e) {
-      // ignore in non-browser environments
-    }
+    // try {
+    //   const el = this.canvas.nativeElement as HTMLCanvasElement;
+    //   const targetHeight = (window?.innerWidth && window.innerWidth <= 600) ? 360 : 520;
+    //   el.style.height = targetHeight + 'px';
+    //   el.height = targetHeight;
+    // } catch (e) {
+    //   // ignore in non-browser environments
+    // }
 
     // Build labels (unique, sorted) as "Year Q<quarter>" or year-only or provided label
     const rows = this.data.map(d => ({

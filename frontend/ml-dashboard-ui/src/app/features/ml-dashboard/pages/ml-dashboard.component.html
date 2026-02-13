@@ -59,26 +59,23 @@
     <div class="chart-panel" style="min-height:520px;">
       <!-- While loading the drill/aggregate call, reserve the chart space to
            avoid layout shifts. Show a light placeholder. -->
-      <ng-container *ngIf="(facade.loading$ | async); else showChart">
-        <div style="height:520px;display:flex;align-items:center;justify-content:center;color:#666;background:#fafafa;border-radius:8px;border:1px dashed rgba(0,0,0,0.04);">
-          Loading details...
-        </div>
-      </ng-container>
-      <ng-template #showChart>
-        <ng-container *ngIf="facade.result$ | async as result">
-          <!-- Show summary insight when backend returns it -->
-          <div *ngIf="result?.summary_insight" class="key-insight" style="margin-bottom:12px;display:flex;align-items:flex-start;gap:6px;">
-            <mat-icon class="insight-icon" aria-hidden="true" style="color:#f59e0b;">insights</mat-icon>
-            <div>
-              <div style="font-weight:700;color:#1f2937;margin-bottom:4px;">Key Insights</div>
-              <div style="color:#374151;max-width:900px;">{{ result.summary_insight }}</div>
-            </div>
+      <ng-container *ngIf="facade.result$ | async as result">
+        <!-- Show summary insight when backend returns it -->
+        <div *ngIf="result?.summary_insight" class="key-insight" style="margin-bottom:12px;display:flex;align-items:flex-start;gap:6px;">
+          <mat-icon class="insight-icon" aria-hidden="true" style="color:#f59e0b;">insights</mat-icon>
+          <div>
+            <div style="font-weight:700;color:#1f2937;margin-bottom:4px;">Key Insights</div>
+            <div style="color:#374151;max-width:900px;">{{ result.summary_insight }}</div>
           </div>
-          <!-- Breadcrumbs/back removed per UX request -->
-
-          <app-ml-chart [data]="result.predictions" [mode]="chartModeActive" [isDrill]="isDrillActive"></app-ml-chart>
-        </ng-container>
-      </ng-template>
+        </div>
+        <app-ml-chart [data]="result.predictions" [mode]="chartModeActive" [isDrill]="isDrillActive"></app-ml-chart>
+      </ng-container>
     </div>
   </div>
+
+  <div class="global-loader" *ngIf="facade.loading$ | async">
+    <div class="loader-content">
+        Loading details...
+    </div>
+</div>
 </div>
