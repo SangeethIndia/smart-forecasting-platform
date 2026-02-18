@@ -9,12 +9,12 @@ sys.path.append(str(PROJECT_ROOT))
 from src.config import MODEL_DIR
 
 class MishapEnsembler:
-     def __init__(self):
+     def __init__(self, w_rf=0.0, w_gb=1.0):
           self.rf_pipeline = joblib.load(MODEL_DIR / "rf_pipeline.joblib")
           self.gb_pipeline = joblib.load(MODEL_DIR / "gb_pipeline.joblib")
-          self.w_rf = 0.0
-          self.w_gb = 1.0
-
+          self.w_rf = w_rf
+          self.w_gb = w_gb
+          
      def predict(self, input_df):
           return (
                self.w_rf * self.rf_pipeline.predict(input_df) + 

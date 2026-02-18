@@ -19,7 +19,9 @@ preds = predict_future_quarters(
     df_features=df,
     entity_type="MishapType",
     entity_value="Aviation",
-    n_quarters=4
+    n_quarters=4,
+    w_rf=0.4,
+    w_gb=0.6
 )
 
 print(preds)

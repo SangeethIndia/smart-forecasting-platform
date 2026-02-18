@@ -10,17 +10,19 @@ from src.preprocessing.build_features import compute_feature_values
 from src.config import MODEL_DIR
 
 MODEL_FEATURES_FILE = MODEL_DIR / "model_features.pkl"
-ensembler = MishapEnsembler()
 
 def predict_future_quarters(
           df_features,
           entity_type,
           entity_value,
-          n_quarters=4
+          n_quarters=4,
+          w_rf=0.3, 
+          w_gb=0.7
 ):
      """
      Predict future quarterly mishap counts using recursive logic. 
      """
+     ensembler = MishapEnsembler(w_rf, w_gb)
 
      # Step 1: Filter historical data for the given entity
      base_df = df_features.copy()

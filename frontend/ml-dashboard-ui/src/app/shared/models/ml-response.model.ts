@@ -9,4 +9,5 @@ export interface YearlyTrend {
 export interface MishapPredictionResponse {
   predictions: YearlyTrend[];
   feature_importance?: any;
+  summary_insight?: string;
 }

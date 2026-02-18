@@ -1,7 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { MlChartComponent } from "../components/ml-chart/ml-chart.component";
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 // MlFormComponent intentionally removed (top panel) per UI change
 import { MlDashboardFacade } from "../services/ml-dashboard.facade";
 import { MishapPredictionRequest } from "../../../shared/models/ml-request.model";
@@ -13,7 +15,9 @@ import { HttpClient } from "@angular/common/http";
   imports: [
     CommonModule,
     FormsModule,
-    MlChartComponent
+    MlChartComponent,
+    MatIconModule,
+    MatTooltipModule
 ],
   providers: [MlDashboardFacade, HttpClient],
   styleUrls: ['./ml-dashboard.component.scss'],
@@ -23,60 +27,90 @@ export class MlDashboardPage {
   // UI-driven selections
   // 'year' | 'quarter' | 'classification'
   trendMode: 'year' | 'quarter' | 'classification' = 'year';
-  // mode currently displayed in the chart. Only updated when user clicks Apply
+  // mode currently displayed in the chart. Kept in sync with selections (auto-run)
   chartModeActive: 'year' | 'quarter' | 'classification' = 'year';
   // default quarters to request when quarterly/seasonal view is chosen
   n_quarters = 8;
+  // model selection and weights
+  modelChoice: 'rf' | 'gb' | 'weighted' = 'rf';
+  w_rf = 1.0;
+  w_gb = 0.0;
+  // slider backing value (0-100) to make the range input easier to bind
+  w_rf_percent = 100;
+  // whether the current displayed chart is a drill result
+  isDrillActive = false;
+
+  // Tooltip strings (use TS string literals so newlines are preserved when
+  // passed to matTooltip via property binding)
+  classificationTooltip = `Shows the trend in the mishap count changes grouped by Categories.
+\u00A0A - Total Damage >= $2,500,000 and/or fatality and/or permenant disability
+\u00A0B - Total Damage >= $600,000 and/or injury / operational illness and/or partial disability
+\u00A0C - Total Damage >= $60,000 and/or non fatal injury and/or occupational illness
+\u00A0D - Total Damage >= $25,000 and/or medical treatment greater than first aid
+\u00A0E - Total Damage < $25,000 or injury first aid or less.`;
+
+  // HTML version used for the custom popover (includes <br/> and NBSP for indent)
+  classificationTooltipHtml = `Shows the trend in the mishap count changes grouped by Categories.<br/>
+&nbsp;A - Total Damage &gt;= $2,500,000 and/or fatality and/or permenant disability<br/>
+&nbsp;B - Total Damage &gt;= $600,000 and/or injury / operational illness and/or partial disability<br/>
+&nbsp;C - Total Damage &gt;= $60,000 and/or non fatal injury and/or occupational illness<br/>
+&nbsp;D - Total Damage &gt;= $25,000 and/or medical treatment greater than first aid<br/>
+&nbsp;E - Total Damage &lt; $25,000 or injury first aid or less.`;
 
   constructor(public facade: MlDashboardFacade) {}
 
-  // breadcrumb stack for drill navigation. Each entry stores the label shown
-  // and a snapshot of the previous result so Back can restore it.
-  breadcrumbs: Array<{ label: string; previousMode: string; previousResult: any }> = [];
+  ngOnInit(): void {
+    // Load the first chart automatically on component init
+    // This will show the loader/placeholder while the first request runs
+    this.applyFilters();
+  }
 
   onDrill(evt: { entity: string; year?: number; quarter?: number; label?: string }) {
     if (!evt || !evt.entity) return;
-
-    // snapshot current result so we can go back
-    const current = this.facade.result$.getValue();
-    this.breadcrumbs.push({ label: `${evt.entity}${evt.year ? ' - ' + evt.year : ''}`, previousMode: this.chartModeActive, previousResult: current });
-
-    // build aggregate payload matching backend examples
-    const filters: any[] = [
-      { entity_type: 'MishapType', entity_value: [evt.entity] },
-      { entity_type: 'Source', entity_value: ['Mishap Report'] }
-    ];
-
+    // Build aggregate payload depending on which chart was clicked.
+    // If the current chart is classification, the user clicked a
+    // classification bucket (A/B/C...) and wants to see MishapType
+    // breakdown (Aviation/Ground). Otherwise, they clicked a
+    // MishapType (Aviation/Ground) and want classification breakdown.
     const payload: any = {
-      filters,
-      group_by: ['year', 'mishapclassification'],
+      filters: {},
+      group_by: [],
       metrics: ['mishap_count']
     };
+
+    if (this.chartModeActive === 'classification') {
+      // clicked on classification bucket -> show MishapType breakdown
+      payload.filters = {
+        MishapClassification: [evt.entity],
+        Source: ['Mishap Report']
+      };
+      payload.group_by = ['year', 'mishaptype'];
+      payload.current_selection = 'MishapClassification';
+    } else {
+      // clicked on MishapType (Aviation/Ground) -> show classification breakdown
+      payload.filters = {
+        MishapType: [evt.entity],
+        Source: ['Mishap Report']
+      };
+      payload.group_by = ['year', 'mishapclassification'];
+      payload.current_selection = 'MishapType';
+    }
 
     if (evt.year) {
       payload.start_year = evt.year;
       payload.end_year = evt.year;
+      payload.selected_year = evt.year;
     }
 
-    // set chart into classification mode and request aggregated data
+    // switch chart into classification mode to render grouped bars
     this.chartModeActive = 'classification';
+    this.isDrillActive = true;
+    payload.w_rf = this.w_rf;
+    payload.w_gb = this.w_gb;
+    console.debug('[ml-dashboard] drill payload', payload);
     this.facade.runAggregate(payload);
   }
 
-  onBack() {
-    if (!this.breadcrumbs.length) return;
-    const last = this.breadcrumbs.pop();
-    if (last) {
-      this.chartModeActive = (last.previousMode as any) || 'year';
-      // restore the previous result snapshot if available
-      try {
-        this.facade.result$.next(last.previousResult);
-      } catch (e) {
-        // if restoring fails, clear the view
-        this.facade.result$.next(null);
-      }
-    }
-  }
 
   // Keep existing form hook for compatibility with the embedded form component
   onSubmit(payload: MishapPredictionRequest) {
@@ -86,8 +120,10 @@ export class MlDashboardPage {
   // Build MishapPredictionRequest with keyed filters object and invoke facade
   // Group only by Aviation and Ground and always use Source = Mishap Report
   applyFilters() {
-    // set displayed mode only when user clicks Apply
+  // set displayed mode to current trend selection
     this.chartModeActive = this.trendMode;
+    // any top-level apply resets drill state
+    this.isDrillActive = false;
     let payload: MishapPredictionRequest = {
       filters: {},
       n_quarters: 0
@@ -110,7 +146,7 @@ export class MlDashboardPage {
           MishapType: ['Aviation', 'Ground'],
           Source: ['Mishap Report']
         },
-        n_quarters: 4,
+        n_quarters: 8,
         start_year: 2026,
         end_year: 2027
       };
@@ -127,13 +163,61 @@ export class MlDashboardPage {
       };
     }
 
+    // attach model weights
+    payload.w_rf = this.w_rf;
+    payload.w_gb = this.w_gb;
+
     this.facade.runPrediction(payload, this.trendMode == 'quarter');
   }
 
   onTrendModeChange() {
-    // Clear current result so the chart area hides until user clicks Apply
-    try {
-      this.facade.result$.next(null);
-    } catch (e) {}
+    // Clear current result so the chart area hides while we load new data
+    try { this.facade.result$.next(null); } catch (e) {}
+    // auto-run for the newly selected trendMode
+    this.applyFilters();
+  }
+
+  onModelChoiceChange(choice: 'rf' | 'gb' | 'weighted') {
+    this.modelChoice = choice;
+    if (choice === 'rf') {
+      this.w_rf = 1.0;
+      this.w_gb = 0.0;
+    } else if (choice === 'gb') {
+      this.w_rf = 0.0;
+      this.w_gb = 1.0;
+    } else {
+      // keep previous weights or default to equal split
+      if (typeof this.w_rf !== 'number' || typeof this.w_gb !== 'number') {
+        this.w_rf = 0.5;
+        this.w_gb = 0.5;
+      }
+    }
+    // keep slider in sync
+    this.w_rf_percent = Math.round((this.w_rf || 0) * 100);
+    // auto-run whenever model selection changes
+    this.applyFilters();
+  }
+
+  onWeightsChange(changed: 'rf' | 'gb') {
+    // clamp inputs
+    this.w_rf = Math.max(0, Math.min(1, Number(this.w_rf) || 0));
+    this.w_gb = Math.max(0, Math.min(1, Number(this.w_gb) || 0));
+    // ensure they sum to 1.0 by making the other the complement of the
+    // changed field. This avoids floating sums and keeps the UI deterministic.
+    if (changed === 'rf') {
+      this.w_gb = Number((1 - this.w_rf).toFixed(2));
+    } else {
+      this.w_rf = Number((1 - this.w_gb).toFixed(2));
+    }
+    this.w_rf_percent = Math.round(this.w_rf * 100);
+    // run prediction with new weights
+    this.applyFilters();
+  }
+
+  onSliderChange() {
+    // w_rf_percent is 0-100; compute w_rf and w_gb and apply
+    this.w_rf = Number(((this.w_rf_percent || 0) / 100).toFixed(2));
+    this.w_gb = Number((1 - this.w_rf).toFixed(2));
+    this.applyFilters();
   }
 }
